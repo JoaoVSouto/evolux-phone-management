@@ -1,4 +1,10 @@
+$theme-colors: (
+  'dark': #201a16,
+);
+
 @import '~bootstrap/scss/bootstrap';
+
+@import 'components';
 
 html {
   @include media-breakpoint-down('md') {
