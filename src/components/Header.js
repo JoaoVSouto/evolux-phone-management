@@ -5,9 +5,9 @@ import evoluxLogo from '../assets/img/evolux-logo.png';
 
 function Header() {
   return (
-    <Navbar as="header" bg="dark" variant="dark" className="header">
+    <Navbar as="header" bg="primary" variant="dark" className="header">
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand>
           <img src={evoluxLogo} alt="Evolux" />
         </Navbar.Brand>
       </Container>
