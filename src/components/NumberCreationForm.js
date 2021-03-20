@@ -1,6 +1,8 @@
+import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { FaSpinner } from 'react-icons/fa';
 
 import Form from 'react-bootstrap/Form';
 import ModalFooter from 'react-bootstrap/ModalFooter';
@@ -32,9 +34,14 @@ function NumberCreationForm() {
     resolver: yupResolver(schema),
     mode: 'all',
   });
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submissionError, setSubmissionError] = React.useState('');
 
   const onSubmit = async data => {
     const { value, monthlyPrice, setupPrice, currency } = data;
+
+    setIsSubmitting(true);
+    setSubmissionError('');
 
     try {
       await api.post('dids', {
@@ -43,10 +50,12 @@ function NumberCreationForm() {
         monthlyPrice: monthlyPrice.toFixed(2),
         setupPrice: setupPrice.toFixed(2),
       });
-
-      console.log('created!');
     } catch {
-      console.log('failed to create!');
+      setSubmissionError(
+        'Some error occurred while creating DID. Please try again.'
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -104,8 +113,16 @@ function NumberCreationForm() {
       </Form.Group>
 
       <ModalFooter>
-        <Button type="submit" variant="success" disabled={!isDirty || !isValid}>
-          Create
+        {submissionError && (
+          <small className="text-danger">{submissionError}</small>
+        )}
+        <Button
+          type="submit"
+          variant="success"
+          className="create-did-btn"
+          disabled={isSubmitting || !isDirty || !isValid}
+        >
+          {isSubmitting ? <FaSpinner /> : 'Create'}
         </Button>
       </ModalFooter>
     </Form>
