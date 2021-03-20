@@ -6,9 +6,11 @@ import Form from 'react-bootstrap/Form';
 import ModalFooter from 'react-bootstrap/ModalFooter';
 import Button from 'react-bootstrap/Button';
 
+import api from '../services/api';
+
 const schema = Yup.object().shape({
-  value: Yup.string().matches(/\+\d{2}\s\(\d{2}\)\s\d{5}-\d{4}/, {
-    message: 'Number is not following the pattern: +xx (xx) xxxxx-xxxx',
+  value: Yup.string().matches(/^\+\d{2}\s\d{2}\s\d{5}-\d{4}$/, {
+    message: 'Number is not following the pattern: +xx xx xxxxx-xxxx',
   }),
   monthlyPrice: Yup.number()
     .typeError('Monthly price must be a valid number')
@@ -31,7 +33,22 @@ function NumberCreationForm() {
     mode: 'all',
   });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async data => {
+    const { value, monthlyPrice, setupPrice, currency } = data;
+
+    try {
+      await api.post('dids', {
+        value,
+        currency,
+        monthlyPrice: monthlyPrice.toFixed(2),
+        setupPrice: setupPrice.toFixed(2),
+      });
+
+      console.log('created!');
+    } catch {
+      console.log('failed to create!');
+    }
+  };
 
   return (
     <Form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -39,7 +56,7 @@ function NumberCreationForm() {
         <Form.Label>Number</Form.Label>
         <Form.Control
           name="value"
-          placeholder="e.g. +55 (84) 91234-4321"
+          placeholder="e.g. +55 84 91234-4321"
           isInvalid={errors.value}
           ref={register}
         />

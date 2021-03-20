@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
@@ -20,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:mock-server": "json-server --watch ./db/db.json --port 3333",
+    "start:mock-server": "json-server --watch ./db/db.json --port 3333 --delay 1000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
