@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Header from './components/Header';
 import NumberCreation from './components/NumberCreation';
 import ToastContainer from './components/ToastContainer';
+import NumbersTable from './components/NumbersTable';
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
         <h1>DIDs management</h1>
 
         <NumberCreation />
+
+        <NumbersTable />
       </Container>
 
       <ToastContainer />
