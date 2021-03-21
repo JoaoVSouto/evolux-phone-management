@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { FaSpinner } from 'react-icons/fa';
 
 import Form from 'react-bootstrap/Form';
 import ModalFooter from 'react-bootstrap/ModalFooter';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 
 import api from '../services/api';
 
@@ -128,10 +128,22 @@ function NumberCreationForm() {
         <Button
           type="submit"
           variant="success"
-          className="create-did-btn"
           disabled={isSubmitting || !isDirty || !isValid}
         >
-          {isSubmitting ? <FaSpinner /> : 'Create'}
+          {isSubmitting ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span className="sr-only">Loading...</span>
+            </>
+          ) : (
+            'Create'
+          )}
         </Button>
       </ModalFooter>
     </Form>
