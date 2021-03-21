@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 
 import Form from 'react-bootstrap/Form';
 import ModalFooter from 'react-bootstrap/ModalFooter';
@@ -27,7 +28,7 @@ const schema = Yup.object().shape({
     .max(300, 'Setup price must cost at maximum 300.00'),
 });
 
-function NumberCreationForm() {
+function NumberCreationForm({ onSuccessfulSubmit }) {
   const {
     register,
     handleSubmit,
@@ -56,6 +57,7 @@ function NumberCreationForm() {
         setupPrice: setupPrice.toFixed(2),
       });
 
+      onSuccessfulSubmit();
       dispatch(
         addToast({ title: 'Success', description: 'DID created successfully!' })
       );
@@ -149,5 +151,13 @@ function NumberCreationForm() {
     </Form>
   );
 }
+
+NumberCreationForm.propTypes = {
+  onSuccessfulSubmit: PropTypes.func,
+};
+
+NumberCreationForm.defaultProps = {
+  onSuccessfulSubmit: () => {},
+};
 
 export default NumberCreationForm;

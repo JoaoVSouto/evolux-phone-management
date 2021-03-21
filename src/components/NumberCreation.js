@@ -23,7 +23,7 @@ function NumberCreation() {
           <Modal.Title>DID creation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <NumberCreationForm />
+          <NumberCreationForm onSuccessfulSubmit={handleModalClosing} />
         </Modal.Body>
       </Modal>
     </>
