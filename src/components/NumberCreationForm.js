@@ -20,12 +20,10 @@ const schema = Yup.object().shape({
   }),
   monthlyPrice: Yup.number()
     .typeError('Monthly price must be a valid number')
-    .min(0.01, 'Monthly price must cost at least 0.01')
-    .max(50, 'Monthly price must cost at maximum 50.00'),
+    .min(0.01, 'Monthly price must cost at least 0.01'),
   setupPrice: Yup.number()
     .typeError('Setup price must be a valid number')
-    .min(0.01, 'Setup price must cost at least 0.01')
-    .max(300, 'Setup price must cost at maximum 300.00'),
+    .min(0.01, 'Setup price must cost at least 0.01'),
 });
 
 function NumberCreationForm({ onSuccessfulSubmit }) {
