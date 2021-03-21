@@ -18,7 +18,8 @@
   },
   "plugins": [
     "react",
-    "prettier"
+    "prettier",
+    "react-hooks"
   ],
   "rules": {
     "prettier/prettier": "error",
@@ -33,6 +34,8 @@
     ],
     "react/react-in-jsx-scope": "off",
     "no-param-reassign": "off",
-    "import/no-named-as-default": "off"
+    "import/no-named-as-default": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }

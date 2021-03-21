@@ -13,7 +13,7 @@ function NumbersTable() {
 
   React.useEffect(() => {
     dispatch(fetchDids());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Table striped bordered responsive className="mt-4 numbers-table">
