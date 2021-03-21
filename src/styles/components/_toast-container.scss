@@ -2,4 +2,34 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
+
+  &__toast {
+    @extend .bg-success;
+    @extend .text-white;
+    min-width: 15.625rem;
+
+    &__header {
+      background-color: inherit;
+      color: inherit;
+
+      .close {
+        color: $white;
+        opacity: 0.7;
+      }
+    }
+
+    &__title {
+      @extend .mr-auto;
+      @extend .d-flex;
+      @extend .align-items-center;
+    }
+
+    &__icon {
+      @extend .mr-2;
+    }
+
+    &__body {
+      font-weight: $font-weight-medium;
+    }
+  }
 }
