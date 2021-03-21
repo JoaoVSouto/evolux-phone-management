@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { FaCheckCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 import Toast from 'react-bootstrap/Toast';
 
@@ -19,14 +19,19 @@ function ToastContainer() {
       {toasts.map(toast => (
         <Toast
           key={toast.id}
-          className="toast-container__toast"
+          className={`toast-container__toast toast-container__toast--${toast.type}`}
           autohide
           delay={3000}
           onClose={() => handleToastClose(toast.id)}
         >
           <Toast.Header className="toast-container__toast__header">
             <strong className="toast-container__toast__title">
-              <FaCheckCircle className="toast-container__toast__icon" />
+              {toast.type === 'success' && (
+                <FaCheckCircle className="toast-container__toast__icon" />
+              )}
+              {toast.type === 'danger' && (
+                <FaTimesCircle className="toast-container__toast__icon" />
+              )}
               {toast.title}
             </strong>
           </Toast.Header>

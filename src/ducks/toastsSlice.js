@@ -21,11 +21,12 @@ export const toastsSlice = createSlice({
 export const { removeToast } = toastsSlice.actions;
 
 export const addToast = toastData => dispatch => {
-  const { title, description } = toastData;
+  const { type = 'success', title, description } = toastData;
 
   dispatch(
     toastsSlice.actions.addToast({
       id: uuid(),
+      type,
       title,
       description,
     })

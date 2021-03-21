@@ -4,9 +4,16 @@
   right: 1rem;
 
   &__toast {
-    @extend .bg-success;
     @extend .text-white;
     min-width: 15.625rem;
+
+    &--success {
+      @extend .bg-success;
+    }
+
+    &--danger {
+      @extend .bg-danger;
+    }
 
     &__header {
       background-color: inherit;
