@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -9,6 +10,8 @@ import ModalFooter from 'react-bootstrap/ModalFooter';
 import Button from 'react-bootstrap/Button';
 
 import api from '../services/api';
+
+import { addToast } from '../ducks/toastsSlice';
 
 const schema = Yup.object().shape({
   value: Yup.string().matches(/^\+\d{2}\s\d{2}\s\d{5}-\d{4}$/, {
@@ -37,6 +40,8 @@ function NumberCreationForm() {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submissionError, setSubmissionError] = React.useState('');
 
+  const dispatch = useDispatch();
+
   const onSubmit = async data => {
     const { value, monthlyPrice, setupPrice, currency } = data;
 
@@ -50,6 +55,10 @@ function NumberCreationForm() {
         monthlyPrice: monthlyPrice.toFixed(2),
         setupPrice: setupPrice.toFixed(2),
       });
+
+      dispatch(
+        addToast({ title: 'Success', description: 'DID created successfully!' })
+      );
     } catch {
       setSubmissionError(
         'Some error occurred while creating DID. Please try again.'
