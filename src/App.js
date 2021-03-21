@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 
 import Header from './components/Header';
 import NumberCreation from './components/NumberCreation';
+import ToastContainer from './components/ToastContainer';
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
 
         <NumberCreation />
       </Container>
+
+      <ToastContainer />
     </>
   );
 }
