@@ -30,7 +30,7 @@ export const didsSlice = createSlice({
 
 const { setDidsLoading, setDidsSuccess, setDidsError } = didsSlice.actions;
 
-export const fetchDids = ({ page = 1 }) => async dispatch => {
+export const fetchDids = ({ page = 1 } = {}) => async dispatch => {
   dispatch(setDidsLoading());
 
   try {
