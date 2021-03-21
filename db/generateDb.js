@@ -30,7 +30,14 @@ class Generate {
   }
 }
 
-const dids = Array(800)
+const [, , didsQuantity] = process.argv;
+
+// eslint-disable-next-line no-restricted-globals
+if (didsQuantity !== undefined && isNaN(didsQuantity)) {
+  throw new Error('Dids quantity must be a number.');
+}
+
+const dids = Array(Number(didsQuantity) || 800)
   .fill(0)
   .map((_, index) => ({
     id: index + 1,
@@ -43,3 +50,5 @@ const dids = Array(800)
 const data = { dids };
 
 fs.writeFileSync(path.resolve(__dirname, 'db.json'), JSON.stringify(data));
+
+console.info('Fake database generated successfully!');
