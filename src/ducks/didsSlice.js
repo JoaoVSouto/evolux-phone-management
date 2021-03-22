@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 
 import api from '../services/api';
 
@@ -14,6 +14,7 @@ export const didsSlice = createSlice({
     items: [],
     currentPage: 1,
     lastPage: 1,
+    totalOccurrences: 0,
   },
   reducers: {
     setDidsLoading(state) {
@@ -25,6 +26,7 @@ export const didsSlice = createSlice({
       state.isLoading = false;
       state.items = action.payload.dids;
       state.currentPage = action.payload.page;
+      state.totalOccurrences = action.payload.totalOccurrences;
     },
     setDidsError(state) {
       state.hasError = true;
@@ -35,6 +37,12 @@ export const didsSlice = createSlice({
     },
   },
 });
+
+export const hasPagination = createSelector(
+  [state => state.lastPage, state => state.totalOccurrences],
+  (lastPage, totalOccurrences) =>
+    lastPage > 1 && totalOccurrences > DIDS_PER_PAGE
+);
 
 const {
   setDidsLoading,
@@ -59,7 +67,9 @@ export const fetchDids = ({ page = 1 } = {}) => async dispatch => {
       dispatch(setLastPage(getPaginationLastPage(headers.link)));
     }
 
-    dispatch(setDidsSuccess({ dids: data, page }));
+    const totalOccurrences = Number(headers['x-total-count']);
+
+    dispatch(setDidsSuccess({ dids: data, page, totalOccurrences }));
   } catch {
     dispatch(setDidsError());
   }
