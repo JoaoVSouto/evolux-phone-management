@@ -4,6 +4,7 @@ import Header from './components/Header';
 import NumberCreation from './components/NumberCreation';
 import ToastContainer from './components/ToastContainer';
 import NumbersTable from './components/NumbersTable';
+import NumbersPagination from './components/NumbersPagination';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <NumberCreation />
 
         <NumbersTable />
+        <NumbersPagination />
       </Container>
 
       <ToastContainer />
