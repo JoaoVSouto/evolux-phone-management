@@ -10,14 +10,19 @@ import { fetchDids } from '../ducks/didsSlice';
 
 function NumbersTable() {
   const dispatch = useDispatch();
-  const { items: dids, isLoading, hasError } = useSelector(state => state.dids);
+  const { items: dids, isLoading, hasError, currentPage } = useSelector(
+    state => state.dids
+  );
 
-  const retrieveDids = React.useCallback(() => {
-    dispatch(fetchDids());
-  }, [dispatch]);
+  const retrieveDids = React.useCallback(
+    page => {
+      dispatch(fetchDids({ page }));
+    },
+    [dispatch]
+  );
 
   React.useEffect(() => {
-    retrieveDids();
+    retrieveDids(1);
   }, [retrieveDids]);
 
   return (
@@ -45,7 +50,7 @@ function NumbersTable() {
                   size="sm"
                   title="Refetch DIDs"
                   className="ml-2"
-                  onClick={retrieveDids}
+                  onClick={() => retrieveDids(currentPage)}
                 >
                   <FaSyncAlt />
                 </Button>
@@ -63,7 +68,8 @@ function NumbersTable() {
             </td>
           </tr>
         )}
-        {!isLoading &&
+        {!hasError &&
+          !isLoading &&
           dids.map(did => (
             <tr key={did.id}>
               <td>{did.id}</td>

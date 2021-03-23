@@ -25,12 +25,14 @@ export const didsSlice = createSlice({
       state.hasError = false;
       state.isLoading = false;
       state.items = action.payload.dids;
-      state.currentPage = action.payload.page;
       state.totalOccurrences = action.payload.totalOccurrences;
     },
     setDidsError(state) {
       state.hasError = true;
       state.isLoading = false;
+    },
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
     },
     setLastPage(state, action) {
       state.lastPage = action.payload;
@@ -48,11 +50,13 @@ const {
   setDidsLoading,
   setDidsSuccess,
   setDidsError,
+  setCurrentPage,
   setLastPage,
 } = didsSlice.actions;
 
 export const fetchDids = ({ page = 1 } = {}) => async dispatch => {
   dispatch(setDidsLoading());
+  dispatch(setCurrentPage(page));
 
   try {
     const { data, headers } = await api.get('dids', {
@@ -69,7 +73,7 @@ export const fetchDids = ({ page = 1 } = {}) => async dispatch => {
 
     const totalOccurrences = Number(headers['x-total-count']);
 
-    dispatch(setDidsSuccess({ dids: data, page, totalOccurrences }));
+    dispatch(setDidsSuccess({ dids: data, totalOccurrences }));
   } catch {
     dispatch(setDidsError());
   }
