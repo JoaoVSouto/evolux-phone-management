@@ -73,7 +73,23 @@ export const fetchDids = ({ page = 1 } = {}) => async dispatch => {
 
     const totalOccurrences = Number(headers['x-total-count']);
 
-    dispatch(setDidsSuccess({ dids: data, totalOccurrences }));
+    const maximumPage = Math.ceil(totalOccurrences / DIDS_PER_PAGE);
+    const isPageRequestedOutOfBounds = page > maximumPage;
+
+    let dids = data;
+    if (isPageRequestedOutOfBounds) {
+      dispatch(setCurrentPage(maximumPage));
+      dispatch(setLastPage(maximumPage));
+      const didsResponse = await api.get('dids', {
+        params: {
+          _limit: DIDS_PER_PAGE,
+          _page: maximumPage,
+        },
+      });
+      dids = didsResponse.data;
+    }
+
+    dispatch(setDidsSuccess({ dids, totalOccurrences }));
   } catch {
     dispatch(setDidsError());
   }
