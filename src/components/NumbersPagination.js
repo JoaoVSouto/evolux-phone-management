@@ -33,7 +33,7 @@ function NumbersPagination() {
   }
 
   return (
-    <Pagination className="justify-content-center">
+    <Pagination className="justify-content-center flex-wrap">
       <Pagination.First
         disabled={isFirstPage || isLoading}
         onClick={handlePagination(1)}
