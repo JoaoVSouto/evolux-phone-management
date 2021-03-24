@@ -25,6 +25,10 @@ function NumbersPagination() {
       return;
     }
 
+    const url = new URL(window.location);
+    url.searchParams.set('page', page);
+    window.history.replaceState({}, '', url);
+
     dispatch(fetchDids({ page }));
   };
 
