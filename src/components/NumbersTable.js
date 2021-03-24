@@ -22,7 +22,9 @@ function NumbersTable() {
   );
 
   React.useEffect(() => {
-    retrieveDids(1);
+    const url = new URL(window.location);
+
+    retrieveDids(Number(url.searchParams.get('page')) || 1);
   }, [retrieveDids]);
 
   return (
