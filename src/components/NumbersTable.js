@@ -14,6 +14,11 @@ function NumbersTable() {
     state => state.dids
   );
 
+  const readyToShowData = React.useMemo(() => !hasError && !isLoading, [
+    hasError,
+    isLoading,
+  ]);
+
   const retrieveDids = React.useCallback(
     page => {
       dispatch(fetchDids({ page }));
@@ -70,8 +75,14 @@ function NumbersTable() {
             </td>
           </tr>
         )}
-        {!hasError &&
-          !isLoading &&
+        {readyToShowData && dids.length === 0 && (
+          <tr className="bg-transparent">
+            <td colSpan={5}>
+              <p className="m-0 text-primary">Oops. No DIDs were found.</p>
+            </td>
+          </tr>
+        )}
+        {readyToShowData &&
           dids.map(did => (
             <tr key={did.id}>
               <td>{did.id}</td>
