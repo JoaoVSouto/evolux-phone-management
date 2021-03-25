@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaEdit, FaTrash, FaSyncAlt } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaSyncAlt, FaSortNumericDown } from 'react-icons/fa';
 
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
@@ -20,8 +20,8 @@ function NumbersTable() {
   ]);
 
   const retrieveDids = React.useCallback(
-    page => {
-      dispatch(fetchDids({ page }));
+    (page, orderOption = {}) => {
+      dispatch(fetchDids({ page, orderOption }));
     },
     [dispatch]
   );
@@ -37,7 +37,25 @@ function NumbersTable() {
       <thead>
         <tr>
           <th>ID</th>
-          <th>Number</th>
+          <th>
+            <div className="d-flex align-items-center justify-content-between">
+              Number
+              <Button
+                variant="link"
+                size="sm"
+                title="Order numbers by ascending order"
+                className="ml-3"
+                onClick={() =>
+                  retrieveDids(currentPage, {
+                    type: 'value',
+                    order: 'asc',
+                  })
+                }
+              >
+                <FaSortNumericDown size={20} />
+              </Button>
+            </div>
+          </th>
           <th>Monthly price</th>
           <th>Setup price</th>
           <th>Actions</th>

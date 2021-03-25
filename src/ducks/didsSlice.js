@@ -15,6 +15,7 @@ export const didsSlice = createSlice({
     currentPage: 1,
     lastPage: 1,
     totalOccurrences: 0,
+    orderOption: {},
   },
   reducers: {
     setDidsLoading(state) {
@@ -37,6 +38,9 @@ export const didsSlice = createSlice({
     setLastPage(state, action) {
       state.lastPage = action.payload;
     },
+    setOrderOption(state, action) {
+      state.orderOption = action.payload;
+    },
   },
 });
 
@@ -52,17 +56,24 @@ const {
   setDidsError,
   setCurrentPage,
   setLastPage,
+  setOrderOption,
 } = didsSlice.actions;
 
-export const fetchDids = ({ page = 1 } = {}) => async dispatch => {
+export const fetchDids = ({
+  page = 1,
+  orderOption = {},
+} = {}) => async dispatch => {
   dispatch(setDidsLoading());
   dispatch(setCurrentPage(page));
+  dispatch(setOrderOption(orderOption));
 
   try {
     const { data, headers } = await api.get('dids', {
       params: {
         _limit: DIDS_PER_PAGE,
         _page: page,
+        _sort: orderOption.type,
+        _order: orderOption.order,
       },
     });
 

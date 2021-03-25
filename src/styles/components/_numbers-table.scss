@@ -1,5 +1,6 @@
 .numbers-table {
-  tbody td {
+  tbody td,
+  thead th {
     @extend .align-middle;
   }
 }

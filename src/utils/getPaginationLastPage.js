@@ -6,7 +6,7 @@ export default function getPaginationLastPage(rawHeader) {
     1,
     lastPageLink.length - 1
   );
-  const [, page] = lastPageWithoutAngleBrackets.split('_page=');
+  const page = new URL(lastPageWithoutAngleBrackets).searchParams.get('_page');
 
   return Number(page);
 }
