@@ -72,7 +72,7 @@ export const fetchDids = ({
       params: {
         _limit: DIDS_PER_PAGE,
         _page: page,
-        _sort: orderOption.type,
+        _sort: orderOption.sort,
         _order: orderOption.order,
       },
     });

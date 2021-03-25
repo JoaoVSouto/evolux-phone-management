@@ -30,8 +30,8 @@ function NumbersTable() {
   ]);
 
   const isSortedByAscendingNumbers = React.useMemo(
-    () => orderOption.type === 'value' && orderOption.order === 'asc',
-    [orderOption.order, orderOption.type]
+    () => orderOption.sort === 'value' && orderOption.order === 'asc',
+    [orderOption.sort, orderOption.order]
   );
 
   const retrieveDids = React.useCallback(
@@ -65,7 +65,7 @@ function NumbersTable() {
                 className="ml-3"
                 onClick={() =>
                   retrieveDids(currentPage, {
-                    type: 'value',
+                    sort: 'value',
                     order: isSortedByAscendingNumbers ? 'desc' : 'asc',
                   })
                 }
