@@ -51,6 +51,16 @@ function NumbersTable() {
     [dispatch]
   );
 
+  const handleOrdering = ({ sort, order }) => () => {
+    const url = new URL(window.location);
+    url.searchParams.delete('order-desc');
+    url.searchParams.delete('order-asc');
+    url.searchParams.set(`order-${order}`, sort);
+    window.history.replaceState({}, '', url);
+
+    retrieveDids(currentPage, { sort, order });
+  };
+
   React.useEffect(() => {
     const url = new URL(window.location);
 
@@ -73,12 +83,10 @@ function NumbersTable() {
                   isSortedByAscendingNumbers ? 'descending' : 'ascending'
                 } order`}
                 className="ml-3"
-                onClick={() =>
-                  retrieveDids(currentPage, {
-                    sort: 'value',
-                    order: isSortedByAscendingNumbers ? 'desc' : 'asc',
-                  })
-                }
+                onClick={handleOrdering({
+                  sort: 'value',
+                  order: isSortedByAscendingNumbers ? 'desc' : 'asc',
+                })}
               >
                 {isSortedByAscendingNumbers ? (
                   <FaSortNumericUp size={20} />
@@ -99,12 +107,10 @@ function NumbersTable() {
                   isSortedByAscendingMonthlyPrice ? 'descending' : 'ascending'
                 } order`}
                 className="ml-3"
-                onClick={() =>
-                  retrieveDids(currentPage, {
-                    sort: 'monthlyPrice',
-                    order: isSortedByAscendingMonthlyPrice ? 'desc' : 'asc',
-                  })
-                }
+                onClick={handleOrdering({
+                  sort: 'monthlyPrice',
+                  order: isSortedByAscendingMonthlyPrice ? 'desc' : 'asc',
+                })}
               >
                 {isSortedByAscendingMonthlyPrice ? (
                   <FaSortNumericUp size={20} />
@@ -125,12 +131,10 @@ function NumbersTable() {
                   isSortedByAscendingSetupPrice ? 'descending' : 'ascending'
                 } order`}
                 className="ml-3"
-                onClick={() =>
-                  retrieveDids(currentPage, {
-                    sort: 'setupPrice',
-                    order: isSortedByAscendingSetupPrice ? 'desc' : 'asc',
-                  })
-                }
+                onClick={handleOrdering({
+                  sort: 'setupPrice',
+                  order: isSortedByAscendingSetupPrice ? 'desc' : 'asc',
+                })}
               >
                 {isSortedByAscendingSetupPrice ? (
                   <FaSortNumericUp size={20} />
