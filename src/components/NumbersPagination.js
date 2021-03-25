@@ -12,7 +12,9 @@ function NumbersPagination() {
   const dispatch = useDispatch();
 
   const hasPagination = useSelector(state => hasPaginationSelector(state.dids));
-  const { currentPage, lastPage, isLoading } = useSelector(state => state.dids);
+  const { currentPage, lastPage, isLoading, orderOption } = useSelector(
+    state => state.dids
+  );
 
   const isFirstPage = React.useMemo(() => currentPage === 1, [currentPage]);
   const isLastPage = React.useMemo(() => currentPage === lastPage, [
@@ -29,7 +31,7 @@ function NumbersPagination() {
     url.searchParams.set('page', page);
     window.history.replaceState({}, '', url);
 
-    dispatch(fetchDids({ page }));
+    dispatch(fetchDids({ page, orderOption }));
   };
 
   if (!hasPagination) {

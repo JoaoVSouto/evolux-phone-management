@@ -97,7 +97,7 @@ function NumbersTable() {
                   size="sm"
                   title="Refetch DIDs"
                   className="ml-2"
-                  onClick={() => retrieveDids(currentPage)}
+                  onClick={() => retrieveDids(currentPage, orderOption)}
                 >
                   <FaSyncAlt />
                 </Button>
