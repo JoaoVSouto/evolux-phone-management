@@ -96,7 +96,11 @@ function NumbersTable() {
                 title={`Order IDs by ${
                   isSortedByAscendingId ? 'descending' : 'ascending'
                 } order`}
-                className="ml-3"
+                className={`ml-3 ${
+                  !orderOption.sort || orderOption.sort === 'id'
+                    ? 'text-info'
+                    : ''
+                }`}
                 onClick={handleOrdering({
                   sort: 'id',
                   order: isSortedByAscendingId ? 'desc' : 'asc',
@@ -120,7 +124,9 @@ function NumbersTable() {
                 title={`Order numbers by ${
                   isSortedByAscendingNumbers ? 'descending' : 'ascending'
                 } order`}
-                className="ml-3"
+                className={`ml-3 ${
+                  orderOption.sort === 'value' ? 'text-info' : ''
+                }`}
                 onClick={handleOrdering({
                   sort: 'value',
                   order: isSortedByAscendingNumbers ? 'desc' : 'asc',
@@ -144,7 +150,9 @@ function NumbersTable() {
                 title={`Order monthly price by ${
                   isSortedByAscendingMonthlyPrice ? 'descending' : 'ascending'
                 } order`}
-                className="ml-3"
+                className={`ml-3 ${
+                  orderOption.sort === 'monthlyPrice' ? 'text-info' : ''
+                }`}
                 onClick={handleOrdering({
                   sort: 'monthlyPrice',
                   order: isSortedByAscendingMonthlyPrice ? 'desc' : 'asc',
@@ -168,7 +176,9 @@ function NumbersTable() {
                 title={`Order setup price by ${
                   isSortedByAscendingSetupPrice ? 'descending' : 'ascending'
                 } order`}
-                className="ml-3"
+                className={`ml-3 ${
+                  orderOption.sort === 'setupPrice' ? 'text-info' : ''
+                }`}
                 onClick={handleOrdering({
                   sort: 'setupPrice',
                   order: isSortedByAscendingSetupPrice ? 'desc' : 'asc',
