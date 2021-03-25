@@ -34,6 +34,16 @@ function NumbersTable() {
     [orderOption.sort, orderOption.order]
   );
 
+  const isSortedByAscendingMonthlyPrice = React.useMemo(
+    () => orderOption.sort === 'monthlyPrice' && orderOption.order === 'asc',
+    [orderOption.sort, orderOption.order]
+  );
+
+  const isSortedByAscendingSetupPrice = React.useMemo(
+    () => orderOption.sort === 'setupPrice' && orderOption.order === 'asc',
+    [orderOption.sort, orderOption.order]
+  );
+
   const retrieveDids = React.useCallback(
     (page, ordering = {}) => {
       dispatch(fetchDids({ page, orderOption: ordering }));
@@ -78,8 +88,58 @@ function NumbersTable() {
               </Button>
             </div>
           </th>
-          <th>Monthly price</th>
-          <th>Setup price</th>
+          <th>
+            <div className="d-flex align-items-center justify-content-between">
+              Monthly price
+              <Button
+                variant="link"
+                size="sm"
+                disabled={isLoading}
+                title={`Order monthly price by ${
+                  isSortedByAscendingMonthlyPrice ? 'descending' : 'ascending'
+                } order`}
+                className="ml-3"
+                onClick={() =>
+                  retrieveDids(currentPage, {
+                    sort: 'monthlyPrice',
+                    order: isSortedByAscendingMonthlyPrice ? 'desc' : 'asc',
+                  })
+                }
+              >
+                {isSortedByAscendingMonthlyPrice ? (
+                  <FaSortNumericUp size={20} />
+                ) : (
+                  <FaSortNumericDown size={20} />
+                )}
+              </Button>
+            </div>
+          </th>
+          <th>
+            <div className="d-flex align-items-center justify-content-between">
+              Setup price
+              <Button
+                variant="link"
+                size="sm"
+                disabled={isLoading}
+                title={`Order setup price by ${
+                  isSortedByAscendingSetupPrice ? 'descending' : 'ascending'
+                } order`}
+                className="ml-3"
+                onClick={() =>
+                  retrieveDids(currentPage, {
+                    sort: 'setupPrice',
+                    order: isSortedByAscendingSetupPrice ? 'desc' : 'asc',
+                  })
+                }
+              >
+                {isSortedByAscendingSetupPrice ? (
+                  <FaSortNumericUp size={20} />
+                ) : (
+                  <FaSortNumericDown size={20} />
+                )}
+              </Button>
+            </div>
+          </th>
           <th>Actions</th>
         </tr>
       </thead>
