@@ -29,6 +29,13 @@ function NumbersTable() {
     isLoading,
   ]);
 
+  const isSortedByAscendingId = React.useMemo(
+    () =>
+      (orderOption.sort === 'id' && orderOption.order === 'asc') ||
+      !orderOption.sort,
+    [orderOption.sort, orderOption.order]
+  );
+
   const isSortedByAscendingNumbers = React.useMemo(
     () => orderOption.sort === 'value' && orderOption.order === 'asc',
     [orderOption.sort, orderOption.order]
@@ -79,7 +86,30 @@ function NumbersTable() {
     <Table striped bordered responsive className="mt-4 numbers-table">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>
+            <div className="d-flex align-items-center justify-content-between">
+              ID
+              <Button
+                variant="link"
+                size="sm"
+                disabled={isLoading}
+                title={`Order IDs by ${
+                  isSortedByAscendingId ? 'descending' : 'ascending'
+                } order`}
+                className="ml-3"
+                onClick={handleOrdering({
+                  sort: 'id',
+                  order: isSortedByAscendingId ? 'desc' : 'asc',
+                })}
+              >
+                {isSortedByAscendingId ? (
+                  <FaSortNumericUp size={20} />
+                ) : (
+                  <FaSortNumericDown size={20} />
+                )}
+              </Button>
+            </div>
+          </th>
           <th>
             <div className="d-flex align-items-center justify-content-between">
               Number
