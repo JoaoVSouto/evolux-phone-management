@@ -63,8 +63,16 @@ function NumbersTable() {
 
   React.useEffect(() => {
     const url = new URL(window.location);
+    const page = Number(url.searchParams.get('page')) || 1;
 
-    retrieveDids(Number(url.searchParams.get('page')) || 1);
+    const hasOrdering = Boolean(
+      url.searchParams.get('order-asc') || url.searchParams.get('order-desc')
+    );
+    const order = url.searchParams.get('order-asc') ? 'asc' : 'desc';
+    const sort =
+      url.searchParams.get('order-asc') || url.searchParams.get('order-desc');
+
+    retrieveDids(page, hasOrdering ? { sort, order } : {});
   }, [retrieveDids]);
 
   return (
