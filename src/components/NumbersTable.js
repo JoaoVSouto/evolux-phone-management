@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaEdit, FaTrash, FaSyncAlt, FaSortNumericDown } from 'react-icons/fa';
+import {
+  FaEdit,
+  FaTrash,
+  FaSyncAlt,
+  FaSortNumericDown,
+  FaSortNumericUp,
+} from 'react-icons/fa';
 
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
@@ -10,18 +16,27 @@ import { fetchDids } from '../ducks/didsSlice';
 
 function NumbersTable() {
   const dispatch = useDispatch();
-  const { items: dids, isLoading, hasError, currentPage } = useSelector(
-    state => state.dids
-  );
+  const {
+    items: dids,
+    isLoading,
+    hasError,
+    currentPage,
+    orderOption,
+  } = useSelector(state => state.dids);
 
   const readyToShowData = React.useMemo(() => !hasError && !isLoading, [
     hasError,
     isLoading,
   ]);
 
+  const isSortedByAscendingNumbers = React.useMemo(
+    () => orderOption.type === 'value' && orderOption.order === 'asc',
+    [orderOption.order, orderOption.type]
+  );
+
   const retrieveDids = React.useCallback(
-    (page, orderOption = {}) => {
-      dispatch(fetchDids({ page, orderOption }));
+    (page, ordering = {}) => {
+      dispatch(fetchDids({ page, orderOption: ordering }));
     },
     [dispatch]
   );
@@ -43,16 +58,23 @@ function NumbersTable() {
               <Button
                 variant="link"
                 size="sm"
-                title="Order numbers by ascending order"
+                disabled={isLoading}
+                title={`Order numbers by ${
+                  isSortedByAscendingNumbers ? 'descending' : 'ascending'
+                } order`}
                 className="ml-3"
                 onClick={() =>
                   retrieveDids(currentPage, {
                     type: 'value',
-                    order: 'asc',
+                    order: isSortedByAscendingNumbers ? 'desc' : 'asc',
                   })
                 }
               >
-                <FaSortNumericDown size={20} />
+                {isSortedByAscendingNumbers ? (
+                  <FaSortNumericUp size={20} />
+                ) : (
+                  <FaSortNumericDown size={20} />
+                )}
               </Button>
             </div>
           </th>
