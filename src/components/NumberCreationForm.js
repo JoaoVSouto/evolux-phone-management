@@ -24,6 +24,9 @@ const schema = Yup.object().shape({
   setupPrice: Yup.number()
     .typeError('Setup price must be a valid number')
     .min(0.01, 'Setup price must cost at least 0.01'),
+  currency: Yup.string().required('Currency is required').matches(/^\D+$/, {
+    message: 'Currency cannot contain numbers',
+  }),
 });
 
 function NumberCreationForm({ onSuccessfulSubmit }) {
@@ -113,12 +116,15 @@ function NumberCreationForm({ onSuccessfulSubmit }) {
 
       <Form.Group controlId="didCurrency">
         <Form.Label>Currency</Form.Label>
-        <Form.Control as="select" name="currency" ref={register}>
-          <option>U$</option>
-          <option>R$</option>
-          <option>€</option>
-          <option>£</option>
-        </Form.Control>
+        <Form.Control
+          name="currency"
+          placeholder="e.g. U$"
+          isInvalid={errors.currency}
+          ref={register}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.currency?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
       <ModalFooter>
