@@ -24,6 +24,10 @@ class DidService {
 
     return { data, headers };
   }
+
+  async delete(id) {
+    await this.httpClient.delete(`dids/${id}`);
+  }
 }
 
 export default DidService;

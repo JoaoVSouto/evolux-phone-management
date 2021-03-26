@@ -61,6 +61,7 @@ const {
   setCurrentPage,
   setLastPage,
   setOrderOption,
+  removeDid,
 } = didsSlice.actions;
 
 export const fetchDids = ({
@@ -105,6 +106,15 @@ export const fetchDids = ({
     dispatch(setDidsSuccess({ dids, totalOccurrences }));
   } catch {
     dispatch(setDidsError());
+  }
+};
+
+export const deleteDid = didId => async dispatch => {
+  try {
+    await services.did.delete(didId);
+    dispatch(removeDid(didId));
+  } catch {
+    throw new Error('Unable to delete DID');
   }
 };
 
