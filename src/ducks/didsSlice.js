@@ -41,6 +41,10 @@ export const didsSlice = createSlice({
     setOrderOption(state, action) {
       state.orderOption = action.payload;
     },
+    removeDid(state, action) {
+      const didId = action.payload;
+      state.items = state.items.filter(did => did.id !== didId);
+    },
   },
 });
 
