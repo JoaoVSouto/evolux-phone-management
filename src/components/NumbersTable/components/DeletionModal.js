@@ -1,9 +1,23 @@
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
+import { deleteDid } from '~/ducks/didsSlice';
+
 function DeletionModal({ show, onHide, didId }) {
+  const dispatch = useDispatch();
+
+  const handleDidDeletion = async () => {
+    try {
+      await deleteDid(didId)(dispatch);
+      console.log('deleted successfully!');
+    } catch {
+      console.log('error on deletion....');
+    }
+  };
+
   return (
     <Modal centered animation={false} show={show} onHide={onHide}>
       <Modal.Header closeButton>
@@ -17,7 +31,7 @@ function DeletionModal({ show, onHide, didId }) {
         <Button variant="danger" onClick={onHide}>
           Cancel
         </Button>
-        <Button variant="success" onClick={onHide}>
+        <Button variant="success" onClick={handleDidDeletion}>
           Delete
         </Button>
       </Modal.Footer>
