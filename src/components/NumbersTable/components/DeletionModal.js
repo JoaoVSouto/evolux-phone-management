@@ -1,20 +1,28 @@
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 
 import { deleteDid } from '~/ducks/didsSlice';
 
 function DeletionModal({ show, onHide, didId }) {
   const dispatch = useDispatch();
 
+  const [isDeleting, setIsDeleting] = React.useState(false);
+
   const handleDidDeletion = async () => {
+    setIsDeleting(true);
+
     try {
       await deleteDid(didId)(dispatch);
-      console.log('deleted successfully!');
+      onHide();
     } catch {
       console.log('error on deletion....');
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -31,8 +39,25 @@ function DeletionModal({ show, onHide, didId }) {
         <Button variant="danger" onClick={onHide}>
           Cancel
         </Button>
-        <Button variant="success" onClick={handleDidDeletion}>
-          Delete
+        <Button
+          variant="success"
+          onClick={handleDidDeletion}
+          disabled={isDeleting}
+        >
+          {isDeleting ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span className="sr-only">Loading...</span>
+            </>
+          ) : (
+            'Delete'
+          )}
         </Button>
       </Modal.Footer>
     </Modal>
