@@ -1,16 +1,12 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  FaEdit,
-  FaTrash,
-  FaSyncAlt,
-  FaSortNumericDown,
-  FaSortNumericUp,
-} from 'react-icons/fa';
+import { FaEdit, FaTrash, FaSyncAlt } from 'react-icons/fa';
 
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
+
+import OrderingButton from './OrderingButton';
 
 import { fetchDids } from '../ducks/didsSlice';
 
@@ -89,107 +85,61 @@ function NumbersTable() {
           <th>
             <div className="d-flex align-items-center justify-content-between">
               ID
-              <Button
-                variant="link"
-                size="sm"
+              <OrderingButton
+                active={!orderOption.sort || orderOption.sort === 'id'}
+                ascending={isSortedByAscendingId}
                 disabled={isLoading}
-                title={`Order IDs by ${
-                  isSortedByAscendingId ? 'descending' : 'ascending'
-                } order`}
-                className={`ml-3 ${
-                  !orderOption.sort || orderOption.sort === 'id'
-                    ? 'text-info'
-                    : ''
-                }`}
                 onClick={handleOrdering({
                   sort: 'id',
                   order: isSortedByAscendingId ? 'desc' : 'asc',
                 })}
-              >
-                {isSortedByAscendingId ? (
-                  <FaSortNumericUp size={20} />
-                ) : (
-                  <FaSortNumericDown size={20} />
-                )}
-              </Button>
+                sortField="IDs"
+              />
             </div>
           </th>
           <th>
             <div className="d-flex align-items-center justify-content-between">
               Number
-              <Button
-                variant="link"
-                size="sm"
+              <OrderingButton
+                active={orderOption.sort === 'value'}
+                ascending={isSortedByAscendingNumbers}
                 disabled={isLoading}
-                title={`Order numbers by ${
-                  isSortedByAscendingNumbers ? 'descending' : 'ascending'
-                } order`}
-                className={`ml-3 ${
-                  orderOption.sort === 'value' ? 'text-info' : ''
-                }`}
                 onClick={handleOrdering({
                   sort: 'value',
                   order: isSortedByAscendingNumbers ? 'desc' : 'asc',
                 })}
-              >
-                {isSortedByAscendingNumbers ? (
-                  <FaSortNumericUp size={20} />
-                ) : (
-                  <FaSortNumericDown size={20} />
-                )}
-              </Button>
+                sortField="numbers"
+              />
             </div>
           </th>
           <th>
             <div className="d-flex align-items-center justify-content-between">
               Monthly price
-              <Button
-                variant="link"
-                size="sm"
+              <OrderingButton
+                active={orderOption.sort === 'monthlyPrice'}
+                ascending={isSortedByAscendingMonthlyPrice}
                 disabled={isLoading}
-                title={`Order monthly price by ${
-                  isSortedByAscendingMonthlyPrice ? 'descending' : 'ascending'
-                } order`}
-                className={`ml-3 ${
-                  orderOption.sort === 'monthlyPrice' ? 'text-info' : ''
-                }`}
                 onClick={handleOrdering({
                   sort: 'monthlyPrice',
                   order: isSortedByAscendingMonthlyPrice ? 'desc' : 'asc',
                 })}
-              >
-                {isSortedByAscendingMonthlyPrice ? (
-                  <FaSortNumericUp size={20} />
-                ) : (
-                  <FaSortNumericDown size={20} />
-                )}
-              </Button>
+                sortField="monthly price"
+              />
             </div>
           </th>
           <th>
             <div className="d-flex align-items-center justify-content-between">
               Setup price
-              <Button
-                variant="link"
-                size="sm"
+              <OrderingButton
+                active={orderOption.sort === 'setupPrice'}
+                ascending={isSortedByAscendingSetupPrice}
                 disabled={isLoading}
-                title={`Order setup price by ${
-                  isSortedByAscendingSetupPrice ? 'descending' : 'ascending'
-                } order`}
-                className={`ml-3 ${
-                  orderOption.sort === 'setupPrice' ? 'text-info' : ''
-                }`}
                 onClick={handleOrdering({
                   sort: 'setupPrice',
                   order: isSortedByAscendingSetupPrice ? 'desc' : 'asc',
                 })}
-              >
-                {isSortedByAscendingSetupPrice ? (
-                  <FaSortNumericUp size={20} />
-                ) : (
-                  <FaSortNumericDown size={20} />
-                )}
-              </Button>
+                sortField="setup price"
+              />
             </div>
           </th>
           <th>Actions</th>
