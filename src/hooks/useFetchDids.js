@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchDids } from '../ducks/didsSlice';
+import { fetchDids } from '~/ducks/didsSlice';
 
 export default function useFetchDids() {
   const dispatch = useDispatch();

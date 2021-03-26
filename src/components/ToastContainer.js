@@ -3,7 +3,7 @@ import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 import Toast from 'react-bootstrap/Toast';
 
-import { removeToast } from '../ducks/toastsSlice';
+import { removeToast } from '~/ducks/toastsSlice';
 
 function ToastContainer() {
   const dispatch = useDispatch();

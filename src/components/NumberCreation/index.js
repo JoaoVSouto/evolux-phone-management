@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Button from 'react-bootstrap/Button';
 
-import useFetchDids from '../../hooks/useFetchDids';
+import useFetchDids from '~/hooks/useFetchDids';
 
 import Form from './components/Form';
 import Modal from './components/Modal';

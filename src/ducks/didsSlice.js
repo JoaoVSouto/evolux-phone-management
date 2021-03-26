@@ -1,8 +1,8 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 
-import services from '../services';
+import services from '~/services';
 
-import getPaginationLastPage from '../utils/getPaginationLastPage';
+import getPaginationLastPage from '~/utils/getPaginationLastPage';
 
 const DIDS_PER_PAGE = 20;
 

@@ -10,9 +10,9 @@ import ModalFooter from 'react-bootstrap/ModalFooter';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
-import services from '../../../services';
+import services from '~/services';
 
-import { addToast } from '../../../ducks/toastsSlice';
+import { addToast } from '~/ducks/toastsSlice';
 
 const schema = Yup.object().shape({
   value: Yup.string().matches(/^\+\d{2}\s\d{2}\s\d{5}-\d{4}$/, {

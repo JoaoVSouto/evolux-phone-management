@@ -1,7 +1,7 @@
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 
-import evoluxLogo from '../assets/img/evolux-logo.png';
+import evoluxLogo from '~/assets/img/evolux-logo.png';
 
 function Header() {
   return (

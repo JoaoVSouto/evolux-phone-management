@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 
 import Pagination from 'react-bootstrap/Pagination';
 
-import { hasPagination as hasPaginationSelector } from '../ducks/didsSlice';
+import { hasPagination as hasPaginationSelector } from '~/ducks/didsSlice';
 
-import useFetchDids from '../hooks/useFetchDids';
+import useFetchDids from '~/hooks/useFetchDids';
 
 function NumbersPagination() {
   const hasPagination = useSelector(state => hasPaginationSelector(state.dids));
