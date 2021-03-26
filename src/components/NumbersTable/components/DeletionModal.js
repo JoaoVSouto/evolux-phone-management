@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { deleteDid } from '~/ducks/didsSlice';
+import { addToast } from '~/ducks/toastsSlice';
 
 function DeletionModal({ show, onHide, didId }) {
   const dispatch = useDispatch();
@@ -19,6 +20,9 @@ function DeletionModal({ show, onHide, didId }) {
     try {
       await deleteDid(didId)(dispatch);
       onHide();
+      dispatch(
+        addToast({ title: 'Success', description: 'DID deleted successfully!' })
+      );
     } catch {
       console.log('error on deletion....');
     } finally {
