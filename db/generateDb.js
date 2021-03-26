@@ -2,12 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 class Generate {
-  static integer(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-  }
-
   static float(min, max) {
     return Math.random() * (max - min) + min;
+  }
+
+  static integer(min, max) {
+    return Math.floor(this.float(min, max));
   }
 
   static phoneNumber() {
