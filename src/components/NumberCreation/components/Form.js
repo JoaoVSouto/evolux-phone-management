@@ -10,7 +10,7 @@ import ModalFooter from 'react-bootstrap/ModalFooter';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
-import api from '../../../services/api';
+import services from '../../../services';
 
 import { addToast } from '../../../ducks/toastsSlice';
 
@@ -51,7 +51,7 @@ function Form({ onSuccessfulSubmit }) {
     setSubmissionError('');
 
     try {
-      await api.post('dids', {
+      await services.did.create({
         value,
         currency,
         monthlyPrice: monthlyPrice.toFixed(2),

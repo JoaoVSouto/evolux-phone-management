@@ -1,6 +1,6 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 
-import api from '../services/api';
+import services from '../services';
 
 import getPaginationLastPage from '../utils/getPaginationLastPage';
 
@@ -68,13 +68,11 @@ export const fetchDids = ({
   dispatch(setOrderOption(orderOption));
 
   try {
-    const { data, headers } = await api.get('dids', {
-      params: {
-        _limit: DIDS_PER_PAGE,
-        _page: page,
-        _sort: orderOption.sort,
-        _order: orderOption.order,
-      },
+    const { data, headers } = await services.did.index({
+      _limit: DIDS_PER_PAGE,
+      _page: page,
+      _sort: orderOption.sort,
+      _order: orderOption.order,
     });
 
     const didsCanBePaginated = Boolean(headers.link);
@@ -91,11 +89,11 @@ export const fetchDids = ({
     if (isPageRequestedOutOfBounds) {
       dispatch(setCurrentPage(maximumPage));
       dispatch(setLastPage(maximumPage));
-      const didsResponse = await api.get('dids', {
-        params: {
-          _limit: DIDS_PER_PAGE,
-          _page: maximumPage,
-        },
+      const didsResponse = await services.did.index({
+        _limit: DIDS_PER_PAGE,
+        _page: maximumPage,
+        _sort: orderOption.sort,
+        _order: orderOption.order,
       });
       dids = didsResponse.data;
     }
