@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FaEdit, FaTrash, FaSyncAlt } from 'react-icons/fa';
 
 import Table from 'react-bootstrap/Table';
@@ -8,17 +8,14 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import OrderingButton from './OrderingButton';
 
-import { fetchDids } from '../ducks/didsSlice';
+import useFetchDids from '../hooks/useFetchDids';
 
 function NumbersTable() {
-  const dispatch = useDispatch();
-  const {
-    items: dids,
-    isLoading,
-    hasError,
-    currentPage,
-    orderOption,
-  } = useSelector(state => state.dids);
+  const { items: dids, isLoading, hasError, orderOption } = useSelector(
+    state => state.dids
+  );
+
+  const fetchDids = useFetchDids();
 
   const readyToShowData = React.useMemo(() => !hasError && !isLoading, [
     hasError,
@@ -47,13 +44,6 @@ function NumbersTable() {
     [orderOption.sort, orderOption.order]
   );
 
-  const retrieveDids = React.useCallback(
-    (page, ordering = {}) => {
-      dispatch(fetchDids({ page, orderOption: ordering }));
-    },
-    [dispatch]
-  );
-
   const handleOrdering = ({ sort, order }) => () => {
     const url = new URL(window.location);
     url.searchParams.delete('order-desc');
@@ -61,7 +51,12 @@ function NumbersTable() {
     url.searchParams.set(`order-${order}`, sort);
     window.history.replaceState({}, '', url);
 
-    retrieveDids(currentPage, { sort, order });
+    fetchDids({
+      orderOption: {
+        sort,
+        order,
+      },
+    });
   };
 
   React.useEffect(() => {
@@ -75,8 +70,12 @@ function NumbersTable() {
     const sort =
       url.searchParams.get('order-asc') || url.searchParams.get('order-desc');
 
-    retrieveDids(page, hasOrdering ? { sort, order } : {});
-  }, [retrieveDids]);
+    fetchDids({
+      page,
+      orderOption: hasOrdering ? { sort, order } : {},
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Table striped bordered responsive className="mt-4 numbers-table">
@@ -159,7 +158,7 @@ function NumbersTable() {
                   size="sm"
                   title="Refetch DIDs"
                   className="ml-2"
-                  onClick={() => retrieveDids(currentPage, orderOption)}
+                  onClick={fetchDids}
                 >
                   <FaSyncAlt />
                 </Button>

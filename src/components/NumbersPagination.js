@@ -1,20 +1,17 @@
 import * as React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Pagination from 'react-bootstrap/Pagination';
 
-import {
-  hasPagination as hasPaginationSelector,
-  fetchDids,
-} from '../ducks/didsSlice';
+import { hasPagination as hasPaginationSelector } from '../ducks/didsSlice';
+
+import useFetchDids from '../hooks/useFetchDids';
 
 function NumbersPagination() {
-  const dispatch = useDispatch();
-
   const hasPagination = useSelector(state => hasPaginationSelector(state.dids));
-  const { currentPage, lastPage, isLoading, orderOption } = useSelector(
-    state => state.dids
-  );
+  const { currentPage, lastPage, isLoading } = useSelector(state => state.dids);
+
+  const fetchDids = useFetchDids();
 
   const isFirstPage = React.useMemo(() => currentPage === 1, [currentPage]);
   const isLastPage = React.useMemo(() => currentPage === lastPage, [
@@ -31,7 +28,7 @@ function NumbersPagination() {
     url.searchParams.set('page', page);
     window.history.replaceState({}, '', url);
 
-    dispatch(fetchDids({ page, orderOption }));
+    fetchDids({ page });
   };
 
   if (!hasPagination) {
