@@ -3,14 +3,23 @@ import * as React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+import useFetchDids from '../hooks/useFetchDids';
+
 import NumberCreationForm from './NumberCreationForm';
 
 function NumberCreation() {
+  const fetchDids = useFetchDids();
+
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   const handleModalOpening = () => setIsModalOpen(true);
 
   const handleModalClosing = () => setIsModalOpen(false);
+
+  const handleSuccessfulSubmit = () => {
+    setIsModalOpen(false);
+    fetchDids();
+  };
 
   return (
     <>
@@ -23,7 +32,7 @@ function NumberCreation() {
           <Modal.Title>DID creation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <NumberCreationForm onSuccessfulSubmit={handleModalClosing} />
+          <NumberCreationForm onSuccessfulSubmit={handleSuccessfulSubmit} />
         </Modal.Body>
       </Modal>
     </>
