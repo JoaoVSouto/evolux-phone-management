@@ -6,9 +6,9 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
-import OrderingButton from './OrderingButton';
+import OrderingButton from './components/OrderingButton';
 
-import useFetchDids from '../hooks/useFetchDids';
+import useFetchDids from '../../hooks/useFetchDids';
 
 function NumbersTable() {
   const { items: dids, isLoading, hasError, orderOption } = useSelector(
