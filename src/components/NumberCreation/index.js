@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 
-import useFetchDids from '../hooks/useFetchDids';
+import useFetchDids from '../../hooks/useFetchDids';
 
-import NumberCreationForm from './NumberCreationForm';
+import Form from './components/Form';
+import Modal from './components/Modal';
 
 function NumberCreation() {
   const fetchDids = useFetchDids();
@@ -27,13 +27,8 @@ function NumberCreation() {
         Create a new DID
       </Button>
 
-      <Modal show={isModalOpen} centered onHide={handleModalClosing}>
-        <Modal.Header closeButton>
-          <Modal.Title>DID creation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <NumberCreationForm onSuccessfulSubmit={handleSuccessfulSubmit} />
-        </Modal.Body>
+      <Modal show={isModalOpen} onHide={handleModalClosing}>
+        <Form onSuccessfulSubmit={handleSuccessfulSubmit} />
       </Modal>
     </>
   );

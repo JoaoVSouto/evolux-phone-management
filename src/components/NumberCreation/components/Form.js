@@ -5,14 +5,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
-import Form from 'react-bootstrap/Form';
+import BForm from 'react-bootstrap/Form';
 import ModalFooter from 'react-bootstrap/ModalFooter';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
-import api from '../services/api';
+import api from '../../../services/api';
 
-import { addToast } from '../ducks/toastsSlice';
+import { addToast } from '../../../ducks/toastsSlice';
 
 const schema = Yup.object().shape({
   value: Yup.string().matches(/^\+\d{2}\s\d{2}\s\d{5}-\d{4}$/, {
@@ -29,7 +29,7 @@ const schema = Yup.object().shape({
   }),
 });
 
-function NumberCreationForm({ onSuccessfulSubmit }) {
+function Form({ onSuccessfulSubmit }) {
   const {
     register,
     handleSubmit,
@@ -72,60 +72,60 @@ function NumberCreationForm({ onSuccessfulSubmit }) {
   };
 
   return (
-    <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-      <Form.Group controlId="didValue">
-        <Form.Label>Number</Form.Label>
-        <Form.Control
+    <BForm noValidate onSubmit={handleSubmit(onSubmit)}>
+      <BForm.Group controlId="didValue">
+        <BForm.Label>Number</BForm.Label>
+        <BForm.Control
           name="value"
           placeholder="e.g. +55 84 91234-4321"
           isInvalid={errors.value}
           ref={register}
         />
-        <Form.Control.Feedback type="invalid">
+        <BForm.Control.Feedback type="invalid">
           {errors.value?.message}
-        </Form.Control.Feedback>
-      </Form.Group>
+        </BForm.Control.Feedback>
+      </BForm.Group>
 
-      <Form.Group controlId="monthlyPrice">
-        <Form.Label>Monthly price</Form.Label>
-        <Form.Control
+      <BForm.Group controlId="monthlyPrice">
+        <BForm.Label>Monthly price</BForm.Label>
+        <BForm.Control
           type="number"
           step="0.01"
           name="monthlyPrice"
           isInvalid={errors.monthlyPrice}
           ref={register}
         />
-        <Form.Control.Feedback type="invalid">
+        <BForm.Control.Feedback type="invalid">
           {errors.monthlyPrice?.message}
-        </Form.Control.Feedback>
-      </Form.Group>
+        </BForm.Control.Feedback>
+      </BForm.Group>
 
-      <Form.Group controlId="setupPrice">
-        <Form.Label>Setup price</Form.Label>
-        <Form.Control
+      <BForm.Group controlId="setupPrice">
+        <BForm.Label>Setup price</BForm.Label>
+        <BForm.Control
           type="number"
           step="0.01"
           name="setupPrice"
           isInvalid={errors.setupPrice}
           ref={register}
         />
-        <Form.Control.Feedback type="invalid">
+        <BForm.Control.Feedback type="invalid">
           {errors.setupPrice?.message}
-        </Form.Control.Feedback>
-      </Form.Group>
+        </BForm.Control.Feedback>
+      </BForm.Group>
 
-      <Form.Group controlId="didCurrency">
-        <Form.Label>Currency</Form.Label>
-        <Form.Control
+      <BForm.Group controlId="didCurrency">
+        <BForm.Label>Currency</BForm.Label>
+        <BForm.Control
           name="currency"
           placeholder="e.g. U$"
           isInvalid={errors.currency}
           ref={register}
         />
-        <Form.Control.Feedback type="invalid">
+        <BForm.Control.Feedback type="invalid">
           {errors.currency?.message}
-        </Form.Control.Feedback>
-      </Form.Group>
+        </BForm.Control.Feedback>
+      </BForm.Group>
 
       <ModalFooter>
         {submissionError && (
@@ -152,16 +152,16 @@ function NumberCreationForm({ onSuccessfulSubmit }) {
           )}
         </Button>
       </ModalFooter>
-    </Form>
+    </BForm>
   );
 }
 
-NumberCreationForm.propTypes = {
+Form.propTypes = {
   onSuccessfulSubmit: PropTypes.func,
 };
 
-NumberCreationForm.defaultProps = {
+Form.defaultProps = {
   onSuccessfulSubmit: () => {},
 };
 
-export default NumberCreationForm;
+export default Form;
