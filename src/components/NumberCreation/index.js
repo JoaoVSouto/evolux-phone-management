@@ -11,6 +11,7 @@ function NumberCreation() {
   const fetchDids = useFetchDids();
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const handleModalOpening = () => setIsModalOpen(true);
 
@@ -27,8 +28,16 @@ function NumberCreation() {
         Create a new DID
       </Button>
 
-      <Modal show={isModalOpen} onHide={handleModalClosing}>
-        <Form onSuccessfulSubmit={handleSuccessfulSubmit} />
+      <Modal
+        show={isModalOpen}
+        onHide={handleModalClosing}
+        locked={isSubmitting}
+      >
+        <Form
+          onSuccessfulSubmit={handleSuccessfulSubmit}
+          isSubmitting={isSubmitting}
+          onSubmissionChange={setIsSubmitting}
+        />
       </Modal>
     </>
   );

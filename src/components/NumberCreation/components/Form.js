@@ -29,7 +29,7 @@ const schema = Yup.object().shape({
   }),
 });
 
-function Form({ onSuccessfulSubmit }) {
+function Form({ onSuccessfulSubmit, isSubmitting, onSubmissionChange }) {
   const {
     register,
     handleSubmit,
@@ -39,7 +39,6 @@ function Form({ onSuccessfulSubmit }) {
     resolver: yupResolver(schema),
     mode: 'all',
   });
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submissionError, setSubmissionError] = React.useState('');
 
   const dispatch = useDispatch();
@@ -47,7 +46,7 @@ function Form({ onSuccessfulSubmit }) {
   const onSubmit = async data => {
     const { value, monthlyPrice, setupPrice, currency } = data;
 
-    setIsSubmitting(true);
+    onSubmissionChange(true);
     setSubmissionError('');
 
     try {
@@ -67,7 +66,7 @@ function Form({ onSuccessfulSubmit }) {
         'Some error occurred while creating DID. Please try again.'
       );
     } finally {
-      setIsSubmitting(false);
+      onSubmissionChange(false);
     }
   };
 
@@ -158,6 +157,8 @@ function Form({ onSuccessfulSubmit }) {
 
 Form.propTypes = {
   onSuccessfulSubmit: PropTypes.func,
+  isSubmitting: PropTypes.bool.isRequired,
+  onSubmissionChange: PropTypes.func.isRequired,
 };
 
 Form.defaultProps = {
