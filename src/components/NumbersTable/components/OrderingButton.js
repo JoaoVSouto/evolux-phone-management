@@ -3,17 +3,38 @@ import { FaSortNumericDown, FaSortNumericUp } from 'react-icons/fa';
 
 import Button from 'react-bootstrap/Button';
 
-function OrderingButton({ disabled, sortField, ascending, active, onClick }) {
+import useFetchDids from '~/hooks/useFetchDids';
+
+function OrderingButton({ disabled, sortLabel, sortKey, ascending, active }) {
+  const fetchDids = useFetchDids();
+
+  const handleOrderChange = () => {
+    const order = ascending ? 'desc' : 'asc';
+
+    const url = new URL(window.location);
+    url.searchParams.delete('order-desc');
+    url.searchParams.delete('order-asc');
+    url.searchParams.set(`order-${order}`, sortKey);
+    window.history.replaceState({}, '', url);
+
+    fetchDids({
+      orderOption: {
+        sort: sortKey,
+        order,
+      },
+    });
+  };
+
   return (
     <Button
       variant="link"
       size="sm"
       disabled={disabled}
-      title={`Order ${sortField} by ${
+      title={`Order ${sortLabel} by ${
         ascending ? 'descending' : 'ascending'
       } order`}
       className={`ml-3 ${active ? 'text-info' : ''}`}
-      onClick={onClick}
+      onClick={handleOrderChange}
     >
       {ascending ? (
         <FaSortNumericUp size={20} />
@@ -26,16 +47,15 @@ function OrderingButton({ disabled, sortField, ascending, active, onClick }) {
 
 OrderingButton.propTypes = {
   disabled: PropTypes.bool,
-  sortField: PropTypes.string.isRequired,
+  sortLabel: PropTypes.string.isRequired,
+  sortKey: PropTypes.string.isRequired,
   ascending: PropTypes.bool.isRequired,
   active: PropTypes.bool,
-  onClick: PropTypes.func,
 };
 
 OrderingButton.defaultProps = {
   disabled: false,
   active: false,
-  onClick: () => {},
 };
 
 export default OrderingButton;

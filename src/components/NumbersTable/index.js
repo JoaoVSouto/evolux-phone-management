@@ -51,21 +51,6 @@ function NumbersTable() {
     [orderOption.sort, orderOption.order]
   );
 
-  const handleOrdering = ({ sort, order }) => () => {
-    const url = new URL(window.location);
-    url.searchParams.delete('order-desc');
-    url.searchParams.delete('order-asc');
-    url.searchParams.set(`order-${order}`, sort);
-    window.history.replaceState({}, '', url);
-
-    fetchDids({
-      orderOption: {
-        sort,
-        order,
-      },
-    });
-  };
-
   const handleSetDidToBeDeleted = didId => setDidToBeDeletedId(didId);
 
   const handleDeletionModalClosing = () => setDidToBeDeletedId(null);
@@ -82,11 +67,8 @@ function NumbersTable() {
                   active={!orderOption.sort || orderOption.sort === 'id'}
                   ascending={isSortedByAscendingId}
                   disabled={isLoading}
-                  onClick={handleOrdering({
-                    sort: 'id',
-                    order: isSortedByAscendingId ? 'desc' : 'asc',
-                  })}
-                  sortField="IDs"
+                  sortKey="id"
+                  sortLabel="IDs"
                 />
               </div>
             </th>
@@ -97,11 +79,8 @@ function NumbersTable() {
                   active={orderOption.sort === 'value'}
                   ascending={isSortedByAscendingNumbers}
                   disabled={isLoading}
-                  onClick={handleOrdering({
-                    sort: 'value',
-                    order: isSortedByAscendingNumbers ? 'desc' : 'asc',
-                  })}
-                  sortField="numbers"
+                  sortKey="value"
+                  sortLabel="numbers"
                 />
               </div>
             </th>
@@ -112,11 +91,8 @@ function NumbersTable() {
                   active={orderOption.sort === 'monthlyPrice'}
                   ascending={isSortedByAscendingMonthlyPrice}
                   disabled={isLoading}
-                  onClick={handleOrdering({
-                    sort: 'monthlyPrice',
-                    order: isSortedByAscendingMonthlyPrice ? 'desc' : 'asc',
-                  })}
-                  sortField="monthly price"
+                  sortKey="monthlyPrice"
+                  sortLabel="monthly price"
                 />
               </div>
             </th>
@@ -127,11 +103,8 @@ function NumbersTable() {
                   active={orderOption.sort === 'setupPrice'}
                   ascending={isSortedByAscendingSetupPrice}
                   disabled={isLoading}
-                  onClick={handleOrdering({
-                    sort: 'setupPrice',
-                    order: isSortedByAscendingSetupPrice ? 'desc' : 'asc',
-                  })}
-                  sortField="setup price"
+                  sortKey="setupPrice"
+                  sortLabel="setup price"
                 />
               </div>
             </th>
