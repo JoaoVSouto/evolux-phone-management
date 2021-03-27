@@ -48,6 +48,20 @@ export const didsSlice = createSlice({
       const didId = action.payload;
       state.items = state.items.filter(did => did.id !== didId);
     },
+    updateDid(state, action) {
+      const { id, ...updatedData } = action.payload;
+
+      const didToBeUpdatedIndex = state.items.findIndex(did => did.id === id);
+
+      if (didToBeUpdatedIndex === -1) {
+        return;
+      }
+
+      state.items[didToBeUpdatedIndex] = {
+        id,
+        ...updatedData,
+      };
+    },
   },
 });
 
