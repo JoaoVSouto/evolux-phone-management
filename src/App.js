@@ -8,26 +8,17 @@ import ToastContainer from './components/ToastContainer';
 import NumbersTable from './components/NumbersTable';
 import NumbersPagination from './components/NumbersPagination';
 
+import services from './services';
+
 import useFetchDids from './hooks/useFetchDids';
 
 function App() {
   const fetchDids = useFetchDids();
 
   React.useEffect(() => {
-    const url = new URL(window.location);
-    const page = Number(url.searchParams.get('page')) || 1;
+    const { page, orderOption } = services.url.getPageAndOrderOption();
 
-    const hasOrdering = Boolean(
-      url.searchParams.get('order-asc') || url.searchParams.get('order-desc')
-    );
-    const order = url.searchParams.get('order-asc') ? 'asc' : 'desc';
-    const sort =
-      url.searchParams.get('order-asc') || url.searchParams.get('order-desc');
-
-    fetchDids({
-      page,
-      orderOption: hasOrdering ? { sort, order } : {},
-    });
+    fetchDids({ page, orderOption });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

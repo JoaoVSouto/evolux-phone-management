@@ -36,7 +36,8 @@
     "no-param-reassign": "off",
     "import/no-named-as-default": "off",
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "class-methods-use-this": "off"
   },
   "settings": {
     "import/resolver": {
