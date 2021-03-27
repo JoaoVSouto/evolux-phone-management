@@ -1,5 +1,8 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 
+// eslint-disable-next-line import/no-cycle
+import store from '~/app/store';
+
 import services from '~/services';
 
 import getPaginationLastPage from '~/utils/getPaginationLastPage';
@@ -113,6 +116,16 @@ export const deleteDid = didId => async dispatch => {
   try {
     await services.did.delete(didId);
     dispatch(removeDid(didId));
+
+    const didsState = store.getState().dids;
+    if (didsState.items.length === 0 && didsState.lastPage > 1) {
+      dispatch(
+        fetchDids({
+          page: didsState.currentPage,
+          orderOption: didsState.orderOption,
+        })
+      );
+    }
   } catch {
     throw new Error('Unable to delete DID');
   }
