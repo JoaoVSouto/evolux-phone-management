@@ -25,6 +25,12 @@ class DidService {
     return { data, headers };
   }
 
+  async update(id) {
+    const { data } = await this.httpClient.put(`dids/${id}`);
+
+    return data;
+  }
+
   async delete(id) {
     await this.httpClient.delete(`dids/${id}`);
   }
