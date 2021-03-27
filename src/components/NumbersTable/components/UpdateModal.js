@@ -1,3 +1,4 @@
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -6,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 
 import didValidationSchema from '~/utils/didValidationSchema';
 
@@ -30,20 +32,37 @@ function UpdateModal({ onHide, did }) {
 
   const dispatch = useDispatch();
 
+  const [isUpdating, setIsUpdating] = React.useState(false);
+
   const onSubmit = async data => {
-    const payload = {
-      id: did.id,
-      currency: data.currency,
-      monthlyPrice: data.monthlyPrice.toFixed(2),
-      setupPrice: data.setupPrice.toFixed(2),
-      value: data.value,
-    };
-    await updateDid(payload)(dispatch);
+    setIsUpdating(true);
+
+    try {
+      const payload = {
+        id: did.id,
+        currency: data.currency,
+        monthlyPrice: data.monthlyPrice.toFixed(2),
+        setupPrice: data.setupPrice.toFixed(2),
+        value: data.value,
+      };
+      await updateDid(payload)(dispatch);
+    } catch {
+      console.error('error!!!');
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   return (
-    <Modal centered animation={false} show onHide={onHide}>
-      <Modal.Header closeButton>
+    <Modal
+      centered
+      animation={false}
+      show
+      onHide={onHide}
+      backdrop={isUpdating ? 'static' : true}
+      keyboard={!isUpdating}
+    >
+      <Modal.Header closeButton={!isUpdating}>
         <Modal.Title>Edit DID #{did.id}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -103,15 +122,28 @@ function UpdateModal({ onHide, did }) {
           </Form.Group>
 
           <Modal.Footer>
-            <Button variant="danger" onClick={onHide}>
+            <Button variant="danger" onClick={onHide} disabled={isUpdating}>
               Cancel
             </Button>
             <Button
               type="submit"
               variant="success"
-              disabled={!isDirty || !isValid}
+              disabled={isUpdating || !isDirty || !isValid}
             >
-              Update
+              {isUpdating ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                  <span className="sr-only">Loading...</span>
+                </>
+              ) : (
+                'Update'
+              )}
             </Button>
           </Modal.Footer>
         </Form>
