@@ -20,14 +20,14 @@ function NumbersTable() {
   const fetchDids = useFetchDids();
 
   const [didToBeDeletedId, setDidToBeDeletedId] = React.useState(null);
-  const [didToBeUpdatedId, setDidToBeUpdatedId] = React.useState(null);
+  const [didToBeUpdated, setDidToBeUpdated] = React.useState(null);
 
   const isDeletionModalOpen = React.useMemo(() => Boolean(didToBeDeletedId), [
     didToBeDeletedId,
   ]);
 
-  const isUpdateModalOpen = React.useMemo(() => Boolean(didToBeUpdatedId), [
-    didToBeUpdatedId,
+  const isUpdateModalOpen = React.useMemo(() => Boolean(didToBeUpdated), [
+    didToBeUpdated,
   ]);
 
   const readyToShowData = React.useMemo(() => !hasError && !isLoading, [
@@ -61,9 +61,9 @@ function NumbersTable() {
 
   const handleDeletionModalClosing = () => setDidToBeDeletedId(null);
 
-  const handleSetDidToBeUpdated = didId => setDidToBeUpdatedId(didId);
+  const handleSetDidToBeUpdated = did => setDidToBeUpdated(did);
 
-  const handleUpdateModalClosing = () => setDidToBeUpdatedId(null);
+  const handleUpdateModalClosing = () => setDidToBeUpdated(null);
 
   return (
     <>
@@ -177,7 +177,7 @@ function NumbersTable() {
                       variant="info"
                       size="sm"
                       title="Edit DID"
-                      onClick={() => handleSetDidToBeUpdated(did.id)}
+                      onClick={() => handleSetDidToBeUpdated(did)}
                     >
                       <FaEdit />
                     </Button>
@@ -202,11 +202,9 @@ function NumbersTable() {
         didId={didToBeDeletedId}
         show={isDeletionModalOpen}
       />
-      <UpdateModal
-        onHide={handleUpdateModalClosing}
-        didId={didToBeUpdatedId}
-        show={isUpdateModalOpen}
-      />
+      {isUpdateModalOpen && (
+        <UpdateModal onHide={handleUpdateModalClosing} did={didToBeUpdated} />
+      )}
     </>
   );
 }

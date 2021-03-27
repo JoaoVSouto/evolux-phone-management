@@ -1,42 +1,111 @@
 import PropTypes from 'prop-types';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function UpdateModal({ show, onHide, didId }) {
+import didValidationSchema from '~/utils/didValidationSchema';
+
+function UpdateModal({ onHide, did }) {
+  const {
+    register,
+    handleSubmit,
+    errors,
+    formState: { isDirty, isValid },
+  } = useForm({
+    resolver: yupResolver(didValidationSchema),
+    mode: 'all',
+    defaultValues: {
+      value: did.value,
+      monthlyPrice: did.monthlyPrice,
+      setupPrice: did.setupPrice,
+      currency: did.currency,
+    },
+  });
+
+  const onSubmit = async data => {
+    const payload = {
+      id: did.id,
+      currency: data.currency,
+      monthlyPrice: String(data.monthlyPrice),
+      setupPrice: String(data.setupPrice),
+      value: String(data.value),
+    };
+    console.log(payload);
+  };
+
   return (
-    <Modal centered animation={false} show={show} onHide={onHide}>
+    <Modal centered animation={false} show onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Edit DID #{didId}</Modal.Title>
+        <Modal.Title>Edit DID #{did.id}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form noValidate>
+        <Form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Form.Group controlId="didValue">
             <Form.Label>Number</Form.Label>
-            <Form.Control name="value" placeholder="e.g. +55 84 91234-4321" />
+            <Form.Control
+              name="value"
+              placeholder="e.g. +55 84 91234-4321"
+              isInvalid={errors.value}
+              ref={register}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.value?.message}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="monthlyPrice">
             <Form.Label>Monthly price</Form.Label>
-            <Form.Control type="number" step="0.01" name="monthlyPrice" />
+            <Form.Control
+              type="number"
+              step="0.01"
+              name="monthlyPrice"
+              isInvalid={errors.monthlyPrice}
+              ref={register}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.monthlyPrice?.message}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="setupPrice">
             <Form.Label>Setup price</Form.Label>
-            <Form.Control type="number" step="0.01" name="setupPrice" />
+            <Form.Control
+              type="number"
+              step="0.01"
+              name="setupPrice"
+              isInvalid={errors.setupPrice}
+              ref={register}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.setupPrice?.message}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="didCurrency">
             <Form.Label>Currency</Form.Label>
-            <Form.Control name="currency" placeholder="e.g. U$" />
+            <Form.Control
+              name="currency"
+              placeholder="e.g. U$"
+              isInvalid={errors.currency}
+              ref={register}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.currency?.message}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Modal.Footer>
             <Button variant="danger" onClick={onHide}>
               Cancel
             </Button>
-            <Button type="submit" variant="success">
+            <Button
+              type="submit"
+              variant="success"
+              disabled={!isDirty || !isValid}
+            >
               Update
             </Button>
           </Modal.Footer>
@@ -47,15 +116,18 @@ function UpdateModal({ show, onHide, didId }) {
 }
 
 UpdateModal.propTypes = {
-  show: PropTypes.bool,
   onHide: PropTypes.func,
-  didId: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([null])]),
+  did: PropTypes.shape({
+    id: PropTypes.number,
+    value: PropTypes.string,
+    monthlyPrice: PropTypes.string,
+    setupPrice: PropTypes.string,
+    currency: PropTypes.string,
+  }).isRequired,
 };
 
 UpdateModal.defaultProps = {
-  show: false,
   onHide: () => {},
-  didId: null,
 };
 
 export default UpdateModal;
