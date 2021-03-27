@@ -126,6 +126,15 @@ export const fetchDids = ({
   }
 };
 
+export const updateDid = updatedData => async dispatch => {
+  try {
+    await services.did.update(updatedData);
+    dispatch(didsSlice.actions.updateDid(updatedData));
+  } catch {
+    throw new Error('Unable to update DID');
+  }
+};
+
 export const deleteDid = didId => async dispatch => {
   try {
     await services.did.delete(didId);
