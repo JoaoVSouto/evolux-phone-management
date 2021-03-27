@@ -34,9 +34,11 @@ function UpdateModal({ onHide, did }) {
   const dispatch = useDispatch();
 
   const [isUpdating, setIsUpdating] = React.useState(false);
+  const [updateError, setUpdateError] = React.useState('');
 
   const onSubmit = async data => {
     setIsUpdating(true);
+    setUpdateError('');
 
     try {
       const payload = {
@@ -53,7 +55,9 @@ function UpdateModal({ onHide, did }) {
         addToast({ title: 'Success', description: 'DID updated successfully!' })
       );
     } catch {
-      console.error('error!!!');
+      setUpdateError(
+        'Some error occurred while updating DID. Please try again.'
+      );
     } finally {
       setIsUpdating(false);
     }
@@ -128,29 +132,35 @@ function UpdateModal({ onHide, did }) {
           </Form.Group>
 
           <Modal.Footer>
-            <Button variant="danger" onClick={onHide} disabled={isUpdating}>
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              variant="success"
-              disabled={isUpdating || !isDirty || !isValid}
-            >
-              {isUpdating ? (
-                <>
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                  <span className="sr-only">Loading...</span>
-                </>
-              ) : (
-                'Update'
-              )}
-            </Button>
+            {updateError && (
+              <small className="text-danger">{updateError}</small>
+            )}
+            <div>
+              <Button variant="danger" onClick={onHide} disabled={isUpdating}>
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="success"
+                className="ml-2"
+                disabled={isUpdating || !isDirty || !isValid}
+              >
+                {isUpdating ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only">Loading...</span>
+                  </>
+                ) : (
+                  'Update'
+                )}
+              </Button>
+            </div>
           </Modal.Footer>
         </Form>
       </Modal.Body>
