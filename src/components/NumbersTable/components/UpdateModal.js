@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -7,6 +8,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import didValidationSchema from '~/utils/didValidationSchema';
+
+import { updateDid } from '~/ducks/didsSlice';
 
 function UpdateModal({ onHide, did }) {
   const {
@@ -25,15 +28,17 @@ function UpdateModal({ onHide, did }) {
     },
   });
 
+  const dispatch = useDispatch();
+
   const onSubmit = async data => {
     const payload = {
       id: did.id,
       currency: data.currency,
-      monthlyPrice: String(data.monthlyPrice),
-      setupPrice: String(data.setupPrice),
-      value: String(data.value),
+      monthlyPrice: data.monthlyPrice.toFixed(2),
+      setupPrice: data.setupPrice.toFixed(2),
+      value: data.value,
     };
-    console.log(payload);
+    await updateDid(payload)(dispatch);
   };
 
   return (
