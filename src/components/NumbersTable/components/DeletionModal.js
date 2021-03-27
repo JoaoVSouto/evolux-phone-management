@@ -13,9 +13,11 @@ function DeletionModal({ show, onHide, didId }) {
   const dispatch = useDispatch();
 
   const [isDeleting, setIsDeleting] = React.useState(false);
+  const [deletionError, setDeletionError] = React.useState('');
 
   const handleDidDeletion = async () => {
     setIsDeleting(true);
+    setDeletionError('');
 
     try {
       await deleteDid(didId)(dispatch);
@@ -24,7 +26,9 @@ function DeletionModal({ show, onHide, didId }) {
         addToast({ title: 'Success', description: 'DID deleted successfully!' })
       );
     } catch {
-      console.log('error on deletion....');
+      setDeletionError(
+        'Some error occurred while deleting DID. Please try again.'
+      );
     } finally {
       setIsDeleting(false);
     }
@@ -47,29 +51,35 @@ function DeletionModal({ show, onHide, didId }) {
         <strong>#{didId}</strong>?
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={onHide} disabled={isDeleting}>
-          Cancel
-        </Button>
-        <Button
-          variant="success"
-          onClick={handleDidDeletion}
-          disabled={isDeleting}
-        >
-          {isDeleting ? (
-            <>
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-              <span className="sr-only">Loading...</span>
-            </>
-          ) : (
-            'Delete'
-          )}
-        </Button>
+        {deletionError && (
+          <small className="text-danger">{deletionError}</small>
+        )}
+        <div>
+          <Button variant="danger" onClick={onHide} disabled={isDeleting}>
+            Cancel
+          </Button>
+          <Button
+            variant="success"
+            className="ml-2"
+            onClick={handleDidDeletion}
+            disabled={isDeleting}
+          >
+            {isDeleting ? (
+              <>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                <span className="sr-only">Loading...</span>
+              </>
+            ) : (
+              'Delete'
+            )}
+          </Button>
+        </div>
       </Modal.Footer>
     </Modal>
   );
