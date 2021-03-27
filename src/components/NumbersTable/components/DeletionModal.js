@@ -31,8 +31,15 @@ function DeletionModal({ show, onHide, didId }) {
   };
 
   return (
-    <Modal centered animation={false} show={show} onHide={onHide}>
-      <Modal.Header closeButton>
+    <Modal
+      centered
+      animation={false}
+      show={show}
+      onHide={onHide}
+      backdrop={isDeleting ? 'static' : true}
+      keyboard={!isDeleting}
+    >
+      <Modal.Header closeButton={!isDeleting}>
         <Modal.Title>Attention!</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -40,7 +47,7 @@ function DeletionModal({ show, onHide, didId }) {
         <strong>#{didId}</strong>?
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={onHide}>
+        <Button variant="danger" onClick={onHide} disabled={isDeleting}>
           Cancel
         </Button>
         <Button
