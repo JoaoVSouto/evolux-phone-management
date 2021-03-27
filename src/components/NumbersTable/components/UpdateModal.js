@@ -12,6 +12,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import didValidationSchema from '~/utils/didValidationSchema';
 
 import { updateDid } from '~/ducks/didsSlice';
+import { addToast } from '~/ducks/toastsSlice';
 
 function UpdateModal({ onHide, did }) {
   const {
@@ -46,6 +47,11 @@ function UpdateModal({ onHide, did }) {
         value: data.value,
       };
       await updateDid(payload)(dispatch);
+
+      onHide();
+      dispatch(
+        addToast({ title: 'Success', description: 'DID updated successfully!' })
+      );
     } catch {
       console.error('error!!!');
     } finally {
