@@ -8,6 +8,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import OrderingButton from './components/OrderingButton';
 import DeletionModal from './components/DeletionModal';
+import UpdateModal from './components/UpdateModal';
 
 import useFetchDids from '~/hooks/useFetchDids';
 
@@ -19,9 +20,14 @@ function NumbersTable() {
   const fetchDids = useFetchDids();
 
   const [didToBeDeletedId, setDidToBeDeletedId] = React.useState(null);
+  const [didToBeUpdatedId, setDidToBeUpdatedId] = React.useState(null);
 
   const isDeletionModalOpen = React.useMemo(() => Boolean(didToBeDeletedId), [
     didToBeDeletedId,
+  ]);
+
+  const isUpdateModalOpen = React.useMemo(() => Boolean(didToBeUpdatedId), [
+    didToBeUpdatedId,
   ]);
 
   const readyToShowData = React.useMemo(() => !hasError && !isLoading, [
@@ -54,6 +60,10 @@ function NumbersTable() {
   const handleSetDidToBeDeleted = didId => setDidToBeDeletedId(didId);
 
   const handleDeletionModalClosing = () => setDidToBeDeletedId(null);
+
+  const handleSetDidToBeUpdated = didId => setDidToBeUpdatedId(didId);
+
+  const handleUpdateModalClosing = () => setDidToBeUpdatedId(null);
 
   return (
     <>
@@ -163,7 +173,12 @@ function NumbersTable() {
                 </td>
                 <td>
                   <div className="d-flex">
-                    <Button variant="info" size="sm" title="Edit DID">
+                    <Button
+                      variant="info"
+                      size="sm"
+                      title="Edit DID"
+                      onClick={() => handleSetDidToBeUpdated(did.id)}
+                    >
                       <FaEdit />
                     </Button>
                     <Button
@@ -186,6 +201,11 @@ function NumbersTable() {
         onHide={handleDeletionModalClosing}
         didId={didToBeDeletedId}
         show={isDeletionModalOpen}
+      />
+      <UpdateModal
+        onHide={handleUpdateModalClosing}
+        didId={didToBeUpdatedId}
+        show={isUpdateModalOpen}
       />
     </>
   );
