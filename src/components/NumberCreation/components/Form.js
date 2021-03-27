@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
 import BForm from 'react-bootstrap/Form';
@@ -12,22 +11,9 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import services from '~/services';
 
-import { addToast } from '~/ducks/toastsSlice';
+import didValidationSchema from '~/utils/didValidationSchema';
 
-const schema = Yup.object().shape({
-  value: Yup.string().matches(/^\+\d{2}\s\d{2}\s\d{5}-\d{4}$/, {
-    message: 'Number is not following the pattern: +xx xx xxxxx-xxxx',
-  }),
-  monthlyPrice: Yup.number()
-    .typeError('Monthly price must be a valid number')
-    .min(0.01, 'Monthly price must cost at least 0.01'),
-  setupPrice: Yup.number()
-    .typeError('Setup price must be a valid number')
-    .min(0.01, 'Setup price must cost at least 0.01'),
-  currency: Yup.string().required('Currency is required').matches(/^\D+$/, {
-    message: 'Currency cannot contain numbers',
-  }),
-});
+import { addToast } from '~/ducks/toastsSlice';
 
 function Form({ onSuccessfulSubmit, isSubmitting, onSubmissionChange }) {
   const {
@@ -36,7 +22,7 @@ function Form({ onSuccessfulSubmit, isSubmitting, onSubmissionChange }) {
     errors,
     formState: { isDirty, isValid },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(didValidationSchema),
     mode: 'all',
   });
   const [submissionError, setSubmissionError] = React.useState('');
