@@ -17,9 +17,9 @@ function App() {
   const fetchDids = useFetchDids();
 
   React.useEffect(() => {
-    const { page, orderOption } = services.url.getPageAndOrderOption();
+    const { page, orderOption, query } = services.url.getAllData();
 
-    fetchDids({ page, orderOption });
+    fetchDids({ page, orderOption, query });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

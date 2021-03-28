@@ -29,10 +29,11 @@ class UrlService {
     window.history.replaceState({}, '', url);
   }
 
-  getPageAndOrderOption() {
+  getAllData() {
     const url = new URL(window.location);
 
     const page = Number(url.searchParams.get('page')) || 1;
+    const query = url.searchParams.get('q') || '';
 
     const hasOrdering = Boolean(
       url.searchParams.get('order-asc') || url.searchParams.get('order-desc')
@@ -44,6 +45,7 @@ class UrlService {
     return {
       page,
       orderOption: hasOrdering ? { sort, order } : {},
+      query,
     };
   }
 }
