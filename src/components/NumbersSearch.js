@@ -9,6 +9,8 @@ import useFetchDids from '~/hooks/useFetchDids';
 
 function NumbersSearch() {
   const query = useSelector(state => state.dids.query);
+  const isLoading = useSelector(state => state.dids.isLoading);
+
   const fetchDids = useFetchDids();
 
   const handleInputChange = e => {
@@ -27,6 +29,7 @@ function NumbersSearch() {
 
   return (
     <FormControl
+      disabled={isLoading}
       defaultValue={query}
       onInput={debouncedHandleInputChange}
       className="numbers-search order-1 order-sm-0 mt-3 mt-sm-0"

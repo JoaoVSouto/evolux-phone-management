@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 
 import Button from 'react-bootstrap/Button';
 
@@ -8,6 +9,8 @@ import Form from './components/Form';
 import Modal from './components/Modal';
 
 function NumberCreation() {
+  const isLoading = useSelector(state => state.dids.isLoading);
+
   const fetchDids = useFetchDids();
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -27,6 +30,7 @@ function NumberCreation() {
       <Button
         variant="success"
         onClick={handleModalOpening}
+        disabled={isLoading}
         className="align-self-stretch flex-sm-shrink-0 ml-sm-4"
       >
         Create a new DID
