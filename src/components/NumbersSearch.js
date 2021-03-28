@@ -1,5 +1,7 @@
 import FormControl from 'react-bootstrap/FormControl';
 
+import services from '~/services';
+
 import useDebounce from '~/hooks/useDebounce';
 import useFetchDids from '~/hooks/useFetchDids';
 
@@ -7,8 +9,12 @@ function NumbersSearch() {
   const fetchDids = useFetchDids();
 
   const handleInputChange = e => {
+    const inputValue = e.target.value.trim();
+
+    services.url.setQuery(inputValue);
+
     fetchDids({
-      query: e.target.value,
+      query: inputValue,
     });
   };
 

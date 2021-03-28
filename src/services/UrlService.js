@@ -17,6 +17,18 @@ class UrlService {
     window.history.replaceState({}, '', url);
   }
 
+  setQuery(query) {
+    const url = new URL(window.location);
+
+    url.searchParams.set('q', query);
+
+    if (!query) {
+      url.searchParams.delete('q');
+    }
+
+    window.history.replaceState({}, '', url);
+  }
+
   getPageAndOrderOption() {
     const url = new URL(window.location);
 
