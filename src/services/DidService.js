@@ -12,13 +12,14 @@ class DidService {
     });
   }
 
-  async index({ _limit, _page, _sort, _order }) {
+  async index({ _limit, _page, _sort, _order, _query }) {
     const { data, headers } = await this.httpClient.get('dids', {
       params: {
         _limit,
         _page,
         _sort,
         _order,
+        value_like: _query,
       },
     });
 
