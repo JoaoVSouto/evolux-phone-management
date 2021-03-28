@@ -1,0 +1,5 @@
+.numbers-search {
+  @include media-breakpoint-up('sm') {
+    max-width: 15rem;
+  }
+}

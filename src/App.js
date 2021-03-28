@@ -7,6 +7,7 @@ import NumberCreation from './components/NumberCreation';
 import ToastContainer from './components/ToastContainer';
 import NumbersTable from './components/NumbersTable';
 import NumbersPagination from './components/NumbersPagination';
+import NumbersSearch from './components/NumbersSearch';
 
 import services from './services';
 
@@ -29,7 +30,10 @@ function App() {
       <Container className="mt-5">
         <h1>DIDs management</h1>
 
-        <NumberCreation />
+        <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-4">
+          <NumbersSearch />
+          <NumberCreation />
+        </div>
 
         <NumbersTable />
         <NumbersPagination />

@@ -24,7 +24,11 @@ function NumberCreation() {
 
   return (
     <>
-      <Button variant="success" className="mt-3" onClick={handleModalOpening}>
+      <Button
+        variant="success"
+        onClick={handleModalOpening}
+        className="align-self-stretch flex-sm-shrink-0 ml-sm-4"
+      >
         Create a new DID
       </Button>
 
