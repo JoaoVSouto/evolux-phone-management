@@ -19,6 +19,7 @@ export const didsSlice = createSlice({
     lastPage: 1,
     totalOccurrences: 0,
     orderOption: {},
+    query: '',
   },
   reducers: {
     setDidsLoading(state) {
@@ -43,6 +44,9 @@ export const didsSlice = createSlice({
     },
     setOrderOption(state, action) {
       state.orderOption = action.payload;
+    },
+    setQuery(state, action) {
+      state.query = action.payload;
     },
     removeDid(state, action) {
       const didId = action.payload;
@@ -78,24 +82,32 @@ const {
   setCurrentPage,
   setLastPage,
   setOrderOption,
+  setQuery,
   removeDid,
 } = didsSlice.actions;
 
 export const fetchDids = ({
   page = 1,
   orderOption = {},
+  query = '',
 } = {}) => async dispatch => {
   dispatch(setDidsLoading());
   dispatch(setCurrentPage(page));
   dispatch(setOrderOption(orderOption));
+  dispatch(setQuery(query));
+
+  const queryWithoutPlusSign = query.replace(/\+/g, '');
 
   try {
-    const { data, headers } = await services.did.index({
+    const payload = {
       _limit: DIDS_PER_PAGE,
       _page: page,
       _sort: orderOption.sort,
       _order: orderOption.order,
-    });
+      _query: queryWithoutPlusSign,
+    };
+
+    const { data, headers } = await services.did.index(payload);
 
     const didsCanBePaginated = Boolean(headers.link);
     if (didsCanBePaginated) {
@@ -106,16 +118,15 @@ export const fetchDids = ({
 
     const maximumPage = Math.ceil(totalOccurrences / DIDS_PER_PAGE);
     const isPageRequestedOutOfBounds = page > maximumPage;
+    const isThereElementsToBeSearched = totalOccurrences > 0;
 
     let dids = data;
-    if (isPageRequestedOutOfBounds) {
+    if (isPageRequestedOutOfBounds && isThereElementsToBeSearched) {
       dispatch(setCurrentPage(maximumPage));
       dispatch(setLastPage(maximumPage));
       const didsResponse = await services.did.index({
-        _limit: DIDS_PER_PAGE,
+        ...payload,
         _page: maximumPage,
-        _sort: orderOption.sort,
-        _order: orderOption.order,
       });
       dids = didsResponse.data;
     }
