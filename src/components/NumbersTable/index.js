@@ -6,6 +6,8 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
+import Highlight from '~/components/Highlight';
+
 import OrderingButton from './components/OrderingButton';
 import DeletionModal from './components/DeletionModal';
 import UpdateModal from './components/UpdateModal';
@@ -13,7 +15,7 @@ import UpdateModal from './components/UpdateModal';
 import useFetchDids from '~/hooks/useFetchDids';
 
 function NumbersTable() {
-  const { items: dids, isLoading, hasError, orderOption } = useSelector(
+  const { items: dids, isLoading, hasError, orderOption, query } = useSelector(
     state => state.dids
   );
 
@@ -164,7 +166,9 @@ function NumbersTable() {
             dids.map(did => (
               <tr key={did.id}>
                 <td>{did.id}</td>
-                <td>{did.value}</td>
+                <td>
+                  <Highlight toHighlight={query}>{did.value}</Highlight>
+                </td>
                 <td>
                   {did.currency} {did.monthlyPrice}
                 </td>
