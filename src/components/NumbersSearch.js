@@ -15,6 +15,7 @@ function NumbersSearch() {
 
     fetchDids({
       query: inputValue,
+      page: 1,
     });
   };
 
