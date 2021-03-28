@@ -48,6 +48,11 @@ export const didsSlice = createSlice({
     setQuery(state, action) {
       state.query = action.payload;
     },
+    decreaseTotalOccurrences(state) {
+      if (state.totalOccurrences > 0) {
+        state.totalOccurrences -= 1;
+      }
+    },
     removeDid(state, action) {
       const didId = action.payload;
       state.items = state.items.filter(did => did.id !== didId);
@@ -83,6 +88,7 @@ const {
   setLastPage,
   setOrderOption,
   setQuery,
+  decreaseTotalOccurrences,
   removeDid,
 } = didsSlice.actions;
 
@@ -150,9 +156,12 @@ export const deleteDid = didId => async dispatch => {
   try {
     await services.did.delete(didId);
     dispatch(removeDid(didId));
+    dispatch(decreaseTotalOccurrences());
 
     const didsState = store.getState().dids;
-    if (didsState.items.length === 0 && didsState.lastPage > 1) {
+    const isItemsEmpty = didsState.items.length === 0;
+    const isThereMoreDids = didsState.totalOccurrences > 1;
+    if (isItemsEmpty && isThereMoreDids) {
       dispatch(
         fetchDids({
           page: didsState.currentPage,
