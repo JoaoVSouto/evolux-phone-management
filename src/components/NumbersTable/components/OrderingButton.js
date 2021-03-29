@@ -3,8 +3,6 @@ import { FaSortNumericDown, FaSortNumericUp } from 'react-icons/fa';
 
 import Button from 'react-bootstrap/Button';
 
-import services from '~/services';
-
 import useFetchDids from '~/hooks/useFetchDids';
 
 function OrderingButton({ disabled, sortLabel, sortKey, ascending, active }) {
@@ -12,8 +10,6 @@ function OrderingButton({ disabled, sortLabel, sortKey, ascending, active }) {
 
   const handleOrderChange = () => {
     const order = ascending ? 'desc' : 'asc';
-
-    services.url.setOrder(order, sortKey);
 
     fetchDids({
       orderOption: {

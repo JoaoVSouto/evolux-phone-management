@@ -2,8 +2,6 @@ import { useSelector } from 'react-redux';
 
 import FormControl from 'react-bootstrap/FormControl';
 
-import services from '~/services';
-
 import useDebounce from '~/hooks/useDebounce';
 import useFetchDids from '~/hooks/useFetchDids';
 
@@ -15,9 +13,6 @@ function NumbersSearch() {
 
   const handleInputChange = e => {
     const inputValue = e.target.value.trim();
-
-    services.url.setQuery(inputValue);
-    services.url.setPage(1);
 
     fetchDids({
       query: inputValue,

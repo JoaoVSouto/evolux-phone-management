@@ -29,6 +29,17 @@ class UrlService {
     window.history.replaceState({}, '', url);
   }
 
+  setAllData({ orderOption = {}, page = 1, query = '' } = {}) {
+    this.setPage(page);
+    this.setQuery(query);
+
+    const isOrderOptionValid = Boolean(orderOption.order && orderOption.sort);
+
+    if (isOrderOptionValid) {
+      this.setOrder(orderOption.order, orderOption.sort);
+    }
+  }
+
   getAllData() {
     const url = new URL(window.location);
 

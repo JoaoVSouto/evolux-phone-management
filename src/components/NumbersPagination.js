@@ -5,8 +5,6 @@ import Pagination from 'react-bootstrap/Pagination';
 
 import { hasPagination as hasPaginationSelector } from '~/ducks/didsSlice';
 
-import services from '~/services';
-
 import useFetchDids from '~/hooks/useFetchDids';
 
 function NumbersPagination() {
@@ -25,8 +23,6 @@ function NumbersPagination() {
     if (page === currentPage) {
       return;
     }
-
-    services.url.setPage(page);
 
     fetchDids({ page });
   };

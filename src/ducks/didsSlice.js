@@ -102,6 +102,8 @@ export const fetchDids = ({
   dispatch(setOrderOption(orderOption));
   dispatch(setQuery(query));
 
+  services.url.setAllData({ page, orderOption, query });
+
   const queryWithoutPlusSign = query.replace(/\+/g, '');
 
   try {
