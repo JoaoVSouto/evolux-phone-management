@@ -35,6 +35,18 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  React.useEffect(() => {
+    const ONE_MINUTE = 1000 * 60;
+
+    const pollingInterval = setInterval(() => {
+      fetchDids();
+    }, ONE_MINUTE);
+
+    return () => {
+      clearInterval(pollingInterval);
+    };
+  }, [fetchDids]);
+
   return (
     <>
       <Header />
