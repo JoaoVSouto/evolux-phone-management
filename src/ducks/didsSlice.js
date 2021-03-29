@@ -103,6 +103,7 @@ export const fetchDids = ({
   dispatch(setQuery(query));
 
   services.url.setAllData({ page, orderOption, query });
+  services.storage.setOrder(orderOption);
 
   const queryWithoutPlusSign = query.replace(/\+/g, '');
 

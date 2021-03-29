@@ -17,7 +17,19 @@ function App() {
   const fetchDids = useFetchDids();
 
   React.useEffect(() => {
-    const { page, orderOption, query } = services.url.getAllData();
+    const storedOrderOption = services.storage.getOrder();
+    const {
+      page,
+      orderOption: queriedOrderOption,
+      query,
+    } = services.url.getAllData();
+
+    const isQueriedOrderOptionValid = Boolean(
+      queriedOrderOption.order && queriedOrderOption.sort
+    );
+    const orderOption = isQueriedOrderOptionValid
+      ? queriedOrderOption
+      : storedOrderOption;
 
     fetchDids({ page, orderOption, query });
     // eslint-disable-next-line react-hooks/exhaustive-deps
