@@ -166,6 +166,7 @@ export const deleteDid = didId => async dispatch => {
         fetchDids({
           page: didsState.currentPage,
           orderOption: didsState.orderOption,
+          query: didsState.query,
         })
       );
     }
