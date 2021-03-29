@@ -22,7 +22,7 @@ class Generate {
   }
 
   static monthlyPrice() {
-    return this.float(0, 1).toFixed(2);
+    return this.float(0.01, 1).toFixed(2);
   }
 
   static setupPrice() {
