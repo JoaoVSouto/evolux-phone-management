@@ -1,68 +1,77 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+<h1 align="center">Telecom Carrier - Phone numbers management 📲</h1>
 
-## Available Scripts
+<div align="center">
+  <a href="https://www.evolux.net.br/">
+	  <img src="https://github.com/JoaoVSouto/evolux-phone-management/blob/main/src/assets/img/evolux-logo.png" />
+  </a>
+</div>
+<div align="center">
+	An implementation for the <a href="https://www.evolux.net.br/">Evolux</a> front-end test.
+</div>
 
-In the project directory, you can run:
+## :tada: Overview
 
-### `yarn start`
+This is an application for a Telecom Carrier which offers a way for managing the phone numbers for sale.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+> Here, managing means creation, search, deletion, update and ordering.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## :fire: Features
 
-### `yarn test`
+- [x] Numbers creation
+- [x] Numbers search by text
+- [x] Paginated numbers listing
+- [x] Numbers ordering by fields
+- [x] Reading/writing numbers search information on URL query params
+- [x] Numbers editing
+- [x] Numbers deletion
+- [x] State persistence for chosen ordering
+- [x] Polling for keep numbers updated
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## :children_crossing: UX improvements
 
-### `yarn build`
+- [x] Fully responsive
+- [x] Fully accessible
+- [x] Reactive state machine
+- [x] Dangerous operations prevention
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## :zap: Techs
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+The following technologies were used to build this project:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [ReactJS](https://reactjs.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [React Bootstrap](https://react-bootstrap.github.io/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Sass](https://sass-lang.com/)
 
-### `yarn eject`
+## :bulb: Usage
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To run this project you will need to have [Node.js v12+](https://nodejs.org/en/), [npm](https://www.npmjs.com/) and [Git](https://git-scm.com/) installed on your computer. From your terminal, run:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+# Clone this repo
+$ git clone https://github.com/JoaoVSouto/evolux-phone-management.git
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Go into app's folder
+$ cd evolux-phone-management/
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# Install dependencies
+$ npm install
 
-## Learn More
+# Generate mocked database
+$ npm run generate:mock-db
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Run mocked API
+$ npm run start:mock-server
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Run the app itself
+$ npm start
+```
 
-### Code Splitting
+## :page_facing_up: License
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+This project is under the MIT license. See the [LICENSE](https://github.com/JoaoVSouto/evolux-phone-management/blob/main/LICENSE) for more information.
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Carefully written by João Vítor Souto :ocean:
