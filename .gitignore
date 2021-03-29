@@ -24,6 +24,6 @@ yarn-error.log*
 
 .eslintcache
 
-db/db.json
+mock/db.json
 
 TODO.md

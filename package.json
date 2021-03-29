@@ -27,8 +27,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "start:mock-server": "json-server --watch ./db/db.json --port 3333 --delay 2000",
-    "generate:fake-db": "node db/generateDb.js"
+    "start:mock-server": "json-server --watch mock/db.json --port 3333 --delay 2000",
+    "generate:mock-db": "node mock/generateDb.js"
   },
   "browserslist": {
     "production": [
