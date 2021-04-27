@@ -16,6 +16,8 @@ import useFetchDids from './hooks/useFetchDids';
 function App() {
   const fetchDids = useFetchDids();
 
+  const [isPolling, setIsPolling] = React.useState(false);
+
   React.useEffect(() => {
     const storedOrderOption = services.storage.getOrder();
     const {
@@ -36,16 +38,43 @@ function App() {
   }, []);
 
   React.useEffect(() => {
+    function handleWindowBlur() {
+      setIsPolling(false);
+    }
+
+    function handleWindowFocus() {
+      setIsPolling(true);
+      fetchDids();
+    }
+
+    const documentHasFocus = document.hasFocus();
+
+    if (documentHasFocus) {
+      setIsPolling(true);
+    }
+
+    window.addEventListener('blur', handleWindowBlur);
+    window.addEventListener('focus', handleWindowFocus);
+
+    return () => {
+      window.removeEventListener('blur', handleWindowBlur);
+      window.removeEventListener('focus', handleWindowFocus);
+    };
+  }, [fetchDids]);
+
+  React.useEffect(() => {
     const ONE_MINUTE = 1000 * 60;
 
     const pollingInterval = setInterval(() => {
-      fetchDids();
+      if (isPolling) {
+        fetchDids();
+      }
     }, ONE_MINUTE);
 
     return () => {
       clearInterval(pollingInterval);
     };
-  }, [fetchDids]);
+  }, [fetchDids, isPolling]);
 
   return (
     <>
